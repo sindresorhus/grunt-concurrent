@@ -2,6 +2,8 @@
 
 > Run grunt tasks concurrently
 
+Running slow tasks like Coffee and Sass concurrently can potensially improve your build time significantly.
+
 ![screenshot](screenshot.png)
 
 *Requires grunt 0.4*
