@@ -1,0 +1,44 @@
+{
+  "name": "grunt-concurrent",
+  "version": "0.0.0",
+  "description": "Run grunt tasks concurrently",
+  "keywords": [
+    "gruntplugin",
+    "concurrent",
+    "parallel",
+    "simultaneous",
+    "optimize",
+    "speed"
+  ],
+  "homepage": "https://github.com/sindresorhus/grunt-concurrent",
+  "bugs": "https://github.com/sindresorhus/grunt-concurrent/issues",
+  "author": {
+    "name": "Sindre Sorhus",
+    "email": "sindresorhus@gmail.com",
+    "url": "http://sindresorhus.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/sindresorhus/grunt-concurrent.git"
+  },
+  "scripts": {
+    "test": "grunt"
+  },
+  "dependencies": {
+    "lpad": "~0.1.0"
+  },
+  "devDependencies": {
+    "grunt": "~0.4.1",
+    "grunt-contrib-clean": "~0.4.0",
+    "grunt-simple-mocha": "~0.3.2"
+  },
+  "peerDependencies": {
+    "grunt": "~0.4.0"
+  },
+  "engines": {
+    "node": ">=0.8.0"
+  },
+  "licenses": {
+    "type": "MIT"
+  }
+}
