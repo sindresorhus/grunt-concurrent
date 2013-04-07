@@ -9,9 +9,9 @@ module.exports = function (grunt) {
 			grunt.util.spawn({
 				grunt: true,
 				args: el
-			}, function (err, result) {
-				if (err) {
-					grunt.warn(err);
+			}, function (err, result, code) {
+				if (err || code > 0) {
+					grunt.warn(result.stderr || result.stdout);
 				}
 				grunt.log.writeln('\n' + result.stdout);
 				next();
