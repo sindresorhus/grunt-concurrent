@@ -8,6 +8,8 @@ Running slow tasks like Coffee and Sass concurrently can potensially improve you
 
 *Requires grunt 0.4*
 
+This task is similar to grunt-parallel, but more focused by leaving out support for shell scripts which results in a leaner config. It also has a smaller dependency size and pads the output of concurrent tasks, as seen above.
+
 
 ## Getting Started
 
