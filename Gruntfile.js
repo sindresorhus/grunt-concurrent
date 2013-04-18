@@ -2,7 +2,13 @@
 module.exports = function (grunt) {
 	grunt.initConfig({
 		concurrent: {
-			test: ['test1', 'test2', 'test3']
+			test: ['test1', 'test2', 'test3'],
+			log: {
+				tasks: ['simplemocha'],
+				options: {
+					logConcurrentOutput: true
+				}
+			}
 		},
 		simplemocha: {
 			test: {
