@@ -2,7 +2,7 @@
 
 > Run grunt tasks concurrently
 
-Running slow tasks like Coffee and Sass concurrently can potentially improve your build time significantly.
+Running slow tasks like Coffee and Sass concurrently can potentially improve your build time significantly. This task is also useful if you need to run multiple blocking tasks like `nodemon` and `watch` at once, as seen in the example config.
 
 ![screenshot](screenshot.png)
 
@@ -57,14 +57,22 @@ grunt.registerTask('default', ['concurrent:target1', 'concurrent:target2']);
 You can optionally log the output of your concurrent tasks by specifying the `logConcurrentOutput` option. Here is an example config which runs [grunt-nodemon](https://github.com/ChrisWren/grunt-nodemon) to launch and monitor a node server and [grunt-contrib-watch](https://github.com/gruntjs/grunt-contrib-watch) to watch for asset changes all in one terminal tab:
 
 ```javascript
-  concurrent: {
-    target: {
-      tasks: ['nodemon', 'watch'],
-      logConcurrentOutput: true
-    }
-  }
+grunt.initConfig({
+	concurrent: {
+		target: {
+			tasks: ['nodemon', 'watch'],
+			logConcurrentOutput: true
+		}
+	}
+});
+
+grunt.loadNpmTasks('grunt-concurrent');
+grunt.registerTask('default', ['concurrent:target']);
 ```
+
 *Note the output will be messy when combining certain tasks. This option is best used with tasks that don't exit like watch and nodemon to monitor the output of long-running concurrent tasks.*
+
+
 ## Contribute
 
 In lieu of a formal styleguide, take care to maintain the existing coding style.
