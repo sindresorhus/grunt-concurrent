@@ -3,21 +3,15 @@ var lpad = require('lpad');
 
 module.exports = function (grunt) {
 	grunt.registerMultiTask('concurrent', 'Run grunt tasks concurrently', function () {
+		var spawnOptions;
 		var cb = this.async();
 		var options = this.options();
-		var opts;
-		var tasks;
+		// Set the tasks based on the config format
+		var tasks = this.data.tasks || this.data;
 
 		// Optionally log the task output
 		if (options.logConcurrentOutput) {
-			opts = { stdio: 'inherit' };
-		}
-
-		// Set the tasks based on the config format
-		if (this.data.tasks) {
-			tasks = this.data.tasks;
-		} else {
-			tasks = this.data;
+			spawnOptions = { stdio: 'inherit' };
 		}
 
 		lpad.stdout('    ');
@@ -25,7 +19,7 @@ module.exports = function (grunt) {
 			grunt.util.spawn({
 				grunt: true,
 				args: el,
-				opts: opts
+				opts: spawnOptions
 			}, function (err, result, code) {
 				if (err || code > 0) {
 					grunt.warn(result.stderr || result.stdout);
