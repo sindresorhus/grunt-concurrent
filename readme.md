@@ -61,7 +61,9 @@ grunt.initConfig({
 	concurrent: {
 		target: {
 			tasks: ['nodemon', 'watch'],
-			logConcurrentOutput: true
+			options: {
+				logConcurrentOutput: true
+			}
 		}
 	}
 });
