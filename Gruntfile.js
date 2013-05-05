@@ -4,7 +4,7 @@ module.exports = function (grunt) {
 		concurrent: {
 			test: ['test1', 'test2', 'test3'],
 			log: {
-				tasks: ['simplemocha'],
+				tasks: ['nodemon', 'watch'],
 				options: {
 					logConcurrentOutput: true
 				}
@@ -12,17 +12,35 @@ module.exports = function (grunt) {
 		},
 		simplemocha: {
 			test: {
-				src: 'test/*.js'
+				src: 'test/*.js',
+				options: {
+					timeout: 6000
+				}
 			}
 		},
 		clean: {
 			test: ['test/tmp']
+		},
+		watch: {
+			scripts: {
+				files: ['tasks/*.js'],
+				tasks: ['default']
+			}
+		},
+		nodemon: {
+			dev: {
+				options: {
+					file: 'test/fixtures/server.js'
+				}
+			}
 		}
 	});
 
 	grunt.loadTasks('tasks');
 	grunt.loadNpmTasks('grunt-contrib-clean');
+	grunt.loadNpmTasks('grunt-contrib-watch');
 	grunt.loadNpmTasks('grunt-simple-mocha');
+	grunt.loadNpmTasks('grunt-nodemon');
 
 	grunt.registerTask('test1', function () {
 		console.log('test1');
@@ -45,7 +63,7 @@ module.exports = function (grunt) {
 
 	grunt.registerTask('default', [
 		'clean',
-		'concurrent',
+		'concurrent:test',
 		'simplemocha',
 		'clean'
 	]);
