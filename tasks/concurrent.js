@@ -2,34 +2,43 @@
 var lpad = require('lpad');
 
 module.exports = function (grunt) {
-	grunt.registerMultiTask('concurrent', 'Run grunt tasks concurrently', function () {
-		var spawnOptions;
-		var cb = this.async();
-		var options = this.options();
-		// Set the tasks based on the config format
-		var tasks = this.data.tasks || this.data;
+    grunt.registerMultiTask('concurrent', 'Run grunt tasks concurrently', function () {
+        var spawnOptions;
+        var cb = this.async();
+        var options = this.options();
+        // Set the tasks based on the config format
+        var tasks = this.data.tasks || this.data;
 
-		// Optionally log the task output
-		if (options.logConcurrentOutput) {
-			spawnOptions = { stdio: 'inherit' };
-		}
+        // Optionally log the task output
+        if (options.logConcurrentOutput) {
+            spawnOptions = { stdio: 'inherit' };
+        }
 
-		lpad.stdout('    ');
-		grunt.util.async.forEach(tasks, function (el, next) {
-			grunt.util.spawn({
-				grunt: true,
-				args: el,
-				opts: spawnOptions
-			}, function (err, result, code) {
-				if (err || code > 0) {
-					grunt.warn(result.stderr || result.stdout);
-				}
-				grunt.log.writeln('\n' + result.stdout);
-				next();
-			});
-		}, function () {
-			lpad.stdout();
-			cb();
-		});
-	});
+        lpad.stdout('    ');
+        grunt.util.async.forEach(tasks, function (el, next) {
+            var command = [ el ];
+
+            // Optionally add command arguments
+            if (options.args) {
+                options.args.forEach(function (arg) {
+                    command.push(arg);
+                });
+            }
+
+            grunt.util.spawn({
+                grunt: true,
+                args: command,
+                opts: spawnOptions
+            }, function (err, result, code) {
+                if (err || code > 0) {
+                    grunt.warn(result.stderr || result.stdout);
+                }
+                grunt.log.writeln('\n' + result.stdout);
+                next();
+            });
+        }, function () {
+            lpad.stdout();
+            cb();
+        });
+    });
 };
