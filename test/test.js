@@ -38,3 +38,27 @@ describe('When the \'logConcurrentOutput\' option is enabled, grunt-concurrent',
 		assert(concurrentLogOuput.indexOf(fs.readFileSync('test/fixtures/expectedLogOutput.txt', 'utf8') === 0));
 	});
 });
+
+describe('Command line args', function () {
+	before( function (done) {
+		var concurrentArgsProcess = spawn('grunt', ['concurrent:testargs', '--arg1=test --arg2']);
+		var linesOfOutput = 0;
+		concurrentArgsProcess.stdout.setEncoding('utf8');
+		concurrentArgsProcess.stdout.on('data', function (data) {
+			if ((data.indexOf('\n') !== -1)) {
+				linesOfOutput++;
+				if (linesOfOutput == 3) {
+					concurrentArgsProcess.kill();
+					done();
+				}
+			}
+		});
+	});
+
+	it('are forwarded to grunt tasks', function () {
+		var expected = fs.readFileSync('test/fixtures/expectedArgsOutput.txt', 'utf8');
+
+		assert(expected.indexOf(fs.readFileSync(path.join(__dirname, 'tmp/args1'), 'utf8')) === 0);
+		assert(expected.indexOf(fs.readFileSync(path.join(__dirname, 'tmp/args2'), 'utf8')) === 0);
+	});
+});

@@ -1,8 +1,10 @@
 'use strict';
 module.exports = function (grunt) {
+
 	grunt.initConfig({
 		concurrent: {
 			test: ['test1', 'test2', 'test3'],
+			testargs: ['testargs1', 'testargs2'],
 			log: {
 				tasks: ['nodemon', 'watch'],
 				options: {
@@ -59,6 +61,16 @@ module.exports = function (grunt) {
 	grunt.registerTask('test3', function () {
 		console.log('test3');
 		grunt.file.write('test/tmp/3');
+	});
+
+	grunt.registerTask('testargs1', function () {
+		var args = grunt.option.flags().join();
+		grunt.file.write('test/tmp/args1', args);
+	});
+
+	grunt.registerTask('testargs2', function () {
+		var args = grunt.option.flags().join();
+		grunt.file.write('test/tmp/args2', args);
 	});
 
 	grunt.registerTask('default', [
