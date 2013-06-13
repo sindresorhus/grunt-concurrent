@@ -4,7 +4,7 @@ var assert = require('assert');
 var fs = require('fs');
 var path = require('path');
 var spawn = require('child_process').spawn;
-var execFile = require('child_process').execFile;
+var exec = require('child_process').exec;
 var concurrentLogOuput = '';
 
 describe('concurrent', function () {
@@ -42,7 +42,7 @@ describe('When the \'logConcurrentOutput\' option is enabled, grunt-concurrent',
 
 describe('Command line args', function () {
 	before( function (done) {
-		execFile('grunt concurrent:testargs --arg1=test --arg2', done);
+		exec('grunt concurrent:testargs --arg1=test --arg2', done);
 	});
 
 	it('are forwarded to grunt tasks', function () {

@@ -1,1 +1,1 @@
---arg1=test --arg2
+--arg1=test,--arg2
