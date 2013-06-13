@@ -1,6 +1,5 @@
 'use strict';
 module.exports = function (grunt) {
-
 	grunt.initConfig({
 		concurrent: {
 			test: ['test1', 'test2', 'test3'],
