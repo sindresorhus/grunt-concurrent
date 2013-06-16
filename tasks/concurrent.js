@@ -15,13 +15,10 @@ module.exports = function (grunt) {
 		}
 
 		lpad.stdout('    ');
-		grunt.util.async.forEach(tasks, function (el, next) {
-			var command = [ el ],
-				args = grunt.option.flags();
-
+		grunt.util.async.forEach(tasks, function (task, next) {
 			grunt.util.spawn({
 				grunt: true,
-				args: command.concat(args),
+				args: [task].concat(grunt.option.flags()),
 				opts: spawnOptions
 			}, function (err, result, code) {
 				if (err || code > 0) {
