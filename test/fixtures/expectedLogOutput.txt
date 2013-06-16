@@ -1,3 +1,0 @@
-Running "concurrent:log" (concurrent) task
-Running "nodemon:dev" (nodemon) task
-Running "watch" task

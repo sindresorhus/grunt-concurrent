@@ -5,10 +5,10 @@ module.exports = function (grunt) {
 			test: ['test1', 'test2', 'test3'],
 			testargs: ['testargs1', 'testargs2'],
 			log: {
-				tasks: ['nodemon', 'watch'],
 				options: {
 					logConcurrentOutput: true
-				}
+				},
+				tasks: ['nodemon', 'watch']
 			}
 		},
 		simplemocha: {

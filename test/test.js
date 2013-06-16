@@ -5,7 +5,7 @@ var fs = require('fs');
 var path = require('path');
 var spawn = require('child_process').spawn;
 var exec = require('child_process').exec;
-var concurrentLogOuput = '';
+
 
 describe('concurrent', function () {
 	it('runs grunt tasks successfully', function () {
@@ -13,42 +13,43 @@ describe('concurrent', function () {
 		assert(fs.existsSync(path.join(__dirname, 'tmp/2')));
 		assert(fs.existsSync(path.join(__dirname, 'tmp/3')));
 	});
-});
 
-describe('When the \'logConcurrentOutput\' option is enabled, grunt-concurrent', function () {
-	before( function (done) {
-		var concurrentLogProcess = spawn('grunt', ['concurrent:log']);
-		var linesOfOutput = 0;
-		var doneLogging = false;
+	it('forwards CLI args to grunt sub-processes', function (done) {
+		var expected = '--arg1=test,--arg2';
 
-		concurrentLogProcess.stdout.setEncoding('utf8');
-		concurrentLogProcess.stdout.on('data', function (data) {
-			concurrentLogOuput += data;
-			if ((data.indexOf('\n') !== -1)) {
-				linesOfOutput++;
-			}
-			if (linesOfOutput === 3 && !doneLogging) {
-				doneLogging = true;
-				concurrentLogProcess.kill();
-				done();
-			}
+		exec('grunt concurrent:testargs ' + expected, function () {
+			assert.equal(fs.readFileSync(path.join(__dirname, 'tmp/args1'), 'utf8'), expected);
+			assert.equal(fs.readFileSync(path.join(__dirname, 'tmp/args2'), 'utf8'), expected);
+			done();
 		});
 	});
 
-	it('outputs concurrent logging', function () {
-		assert(concurrentLogOuput.indexOf(fs.readFileSync('test/fixtures/expectedLogOutput.txt', 'utf8') === 0));
-	});
-});
+	describe('`logConcurrentOutput` option', function () {
+		var logOutput = '';
 
-describe('Command line args', function () {
-	before( function (done) {
-		exec('grunt concurrent:testargs --arg1=test --arg2', done);
-	});
+		before(function (done) {
+			var cp = spawn('grunt', ['concurrent:log']);
+			var lines = 0;
 
-	it('are forwarded to grunt tasks', function () {
-		var expected = fs.readFileSync('test/fixtures/expectedArgsOutput.txt', 'utf8');
+			cp.stdout.setEncoding('utf8');
+			cp.stdout.on('data', function (data) {
+				logOutput += data;
 
-		assert(expected.indexOf(fs.readFileSync(path.join(__dirname, 'tmp/args1'), 'utf8')) === 0);
-		assert(expected.indexOf(fs.readFileSync(path.join(__dirname, 'tmp/args2'), 'utf8')) === 0);
+				if (data.indexOf('\n') !== -1) {
+					lines++;
+				}
+
+				// need 4 lines to make sure it's captured
+				if (lines === 4) {
+					cp.kill();
+					done();
+				}
+			});
+		});
+
+		it('outputs concurrent logging', function () {
+			var expected = 'Running "concurrent:log" (concurrent) task';
+			assert(logOutput.indexOf(expected) !== -1);
+		});
 	});
 });

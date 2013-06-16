@@ -22,7 +22,7 @@
     "url": "git://github.com/sindresorhus/grunt-concurrent.git"
   },
   "scripts": {
-    "test": "grunt"
+    "test": "npm install nodemon -g && grunt"
   },
   "dependencies": {
     "lpad": "~0.1.0"
