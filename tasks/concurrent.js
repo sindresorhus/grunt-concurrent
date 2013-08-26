@@ -1,5 +1,6 @@
 'use strict';
 var lpad = require('lpad');
+var cpCache = [];
 
 module.exports = function (grunt) {
 	grunt.registerMultiTask('concurrent', 'Run grunt tasks concurrently', function () {
@@ -16,7 +17,7 @@ module.exports = function (grunt) {
 
 		lpad.stdout('    ');
 		grunt.util.async.forEach(tasks, function (task, next) {
-			grunt.util.spawn({
+			var cp = grunt.util.spawn({
 				grunt: true,
 				args: [task].concat(grunt.option.flags()),
 				opts: spawnOptions
@@ -27,9 +28,18 @@ module.exports = function (grunt) {
 				grunt.log.writeln('\n' + result.stdout);
 				next();
 			});
+
+			cpCache.push(cp);
 		}, function () {
 			lpad.stdout();
 			cb();
 		});
 	});
 };
+
+// make sure all child processes are killed when grunt exits
+process.on('exit', function () {
+	cpCache.forEach(function (el) {
+		el.kill();
+	});
+});
