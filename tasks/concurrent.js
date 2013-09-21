@@ -6,7 +6,9 @@ module.exports = function (grunt) {
 	grunt.registerMultiTask('concurrent', 'Run grunt tasks concurrently', function () {
 		var spawnOptions;
 		var cb = this.async();
-		var options = this.options();
+		var options = this.options({
+			limit:10
+		});
 		// Set the tasks based on the config format
 		var tasks = this.data.tasks || this.data;
 
@@ -16,7 +18,7 @@ module.exports = function (grunt) {
 		}
 
 		lpad.stdout('    ');
-		grunt.util.async.forEach(tasks, function (task, next) {
+		grunt.util.async.forEachLimit(tasks, options.limit, function (task, next) {
 			var cp = grunt.util.spawn({
 				grunt: true,
 				args: [task].concat(grunt.option.flags()),
