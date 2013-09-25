@@ -52,7 +52,20 @@ grunt.loadNpmTasks('grunt-concurrent');
 grunt.registerTask('default', ['concurrent:target1', 'concurrent:target2']);
 ```
 
-### Logging concurrent output
+
+## Options
+
+### limit
+
+Type: `Number`  
+Default: Number of CPU cores (`require('os').cpus().length`)
+
+Limit of how many tasks that are run concurrently.
+
+### logConcurrentOutput
+
+Type: `Boolean`  
+Default: `false`
 
 You can optionally log the output of your concurrent tasks by specifying the `logConcurrentOutput` option. Here is an example config which runs [grunt-nodemon](https://github.com/ChrisWren/grunt-nodemon) to launch and monitor a node server and [grunt-contrib-watch](https://github.com/gruntjs/grunt-contrib-watch) to watch for asset changes all in one terminal tab:
 
@@ -75,12 +88,6 @@ grunt.registerTask('default', ['concurrent:target']);
 *Note the output will be messy when combining certain tasks. This option is best used with tasks that don't exit like watch and nodemon to monitor the output of long-running concurrent tasks.*
 
 
-## Contribute
-
-In lieu of a formal styleguide, take care to maintain the existing coding style.
-
-
 ## License
 
-MIT License
-(c) [Sindre Sorhus](http://sindresorhus.com)
+MIT © [Sindre Sorhus](http://sindresorhus.com)
