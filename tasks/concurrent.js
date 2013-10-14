@@ -7,7 +7,7 @@ module.exports = function (grunt) {
 		var spawnOptions;
 		var cb = this.async();
 		var options = this.options({
-			limit: require('os').cpus().length
+			limit: Math.max(require('os').cpus().length, 2)
 		});
 		// Set the tasks based on the config format
 		var tasks = this.data.tasks || this.data;

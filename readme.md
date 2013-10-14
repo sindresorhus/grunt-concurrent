@@ -58,7 +58,7 @@ grunt.registerTask('default', ['concurrent:target1', 'concurrent:target2']);
 ### limit
 
 Type: `Number`  
-Default: Number of CPU cores (`require('os').cpus().length`)
+Default: Number of CPU cores (`require('os').cpus().length`) with a minimum of 2
 
 Limit of how many tasks that are run concurrently.
 
