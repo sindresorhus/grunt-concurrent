@@ -11,6 +11,11 @@ module.exports = function (grunt) {
 		});
 		// Set the tasks based on the config format
 		var tasks = this.data.tasks || this.data;
+		
+		// Warn the user if limit is 1, as this case is uncommon and not very useful
+		if (options.limit === 1) {
+			grunt.warn("limit is currently set to 1. Concurrent will probably not work as intended! Check your number of available CPUs.");
+		}
 
 		// Optionally log the task output
 		if (options.logConcurrentOutput) {
