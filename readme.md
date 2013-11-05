@@ -6,9 +6,7 @@ Running slow tasks like Coffee and Sass concurrently can potentially improve you
 
 ![screenshot](screenshot.png)
 
-*Requires grunt 0.4*
-
-This task is similar to [grunt-parallel](https://github.com/iammerrick/grunt-parallel), but more focused by leaving out support for shell scripts which results in a leaner config. It also has a smaller dependency size and pads the output of concurrent tasks, as seen above.
+This task is similar to grunt-parallel, but more focused by leaving out support for shell scripts which results in a leaner config. It also has a smaller dependency size and pads the output of concurrent tasks, as seen above.
 
 
 ## Getting Started
@@ -24,6 +22,9 @@ Once the plugin has been installed, it may be enabled inside your Gruntfile with
 ```js
 grunt.loadNpmTasks('grunt-concurrent');
 ```
+
+*Tip: the [load-grunt-tasks](https://github.com/sindresorhus/load-grunt-tasks) module makes it easier to load multiple grunt tasks.*
+
 
 [grunt]: http://gruntjs.com
 [Getting Started]: https://github.com/gruntjs/grunt/wiki/Getting-started
