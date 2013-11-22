@@ -25,14 +25,15 @@
     "test": "npm install nodemon -g && grunt"
   },
   "dependencies": {
-    "lpad": "~0.1.0"
+    "lpad": "~0.1.0",
+    "async": "~0.2.9"
   },
   "devDependencies": {
     "grunt": "~0.4.1",
-    "grunt-contrib-clean": "~0.4.0",
+    "grunt-contrib-clean": "~0.5.0",
     "grunt-simple-mocha": "~0.4.0",
-    "grunt-contrib-watch": "~0.4.0",
-    "grunt-nodemon": "0.0.2"
+    "grunt-contrib-watch": "~0.5.3",
+    "grunt-nodemon": "~0.1.2"
   },
   "peerDependencies": {
     "grunt": "~0.4.0"

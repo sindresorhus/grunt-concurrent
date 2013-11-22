@@ -1,5 +1,6 @@
 'use strict';
 var lpad = require('lpad');
+var async = require('async');
 var cpCache = [];
 
 module.exports = function (grunt) {
@@ -18,7 +19,7 @@ module.exports = function (grunt) {
 		}
 
 		lpad.stdout('    ');
-		grunt.util.async.forEachLimit(tasks, options.limit, function (task, next) {
+		async.eachLimit(tasks, options.limit, function (task, next) {
 			var cp = grunt.util.spawn({
 				grunt: true,
 				args: [task].concat(grunt.option.flags()),
