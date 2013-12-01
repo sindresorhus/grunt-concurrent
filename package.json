@@ -26,7 +26,8 @@
   },
   "dependencies": {
     "lpad": "~0.1.0",
-    "async": "~0.2.9"
+    "async": "~0.2.9",
+    "memorystream": "~0.2.0"
   },
   "devDependencies": {
     "grunt": "~0.4.1",

@@ -1,6 +1,7 @@
 'use strict';
 var lpad = require('lpad');
 var async = require('async');
+var MemoryStream = require('memorystream');
 var cpCache = [];
 
 module.exports = function (grunt) {
@@ -24,17 +25,32 @@ module.exports = function (grunt) {
 				grunt: true,
 				args: [task].concat(grunt.option.flags()),
 				opts: spawnOptions
-			}, function (err, result, code) {
-				if (err || code > 0) {
-					grunt.warn(result.stderr || result.stdout);
+			}, function() {});
+
+			// Buffer the output.  We buffer into a MemoryStream so that
+			// stdout and stderr will be correctly interleaved.  See
+			// http://stackoverflow.com/questions/15339379/node-js-spawning-a-child-process-interactively-with-separate-stdout-and-stderr-s
+			var memStream = new MemoryStream(null, {
+			    readable : false
+			});
+
+			cp.stdout.pipe(memStream);
+			cp.stderr.pipe(memStream);
+			cp.on('close', function (code) {
+				grunt.log.writeln(memStream.toString());
+				if (code > 0) {
+					next(new Error('Task "' + task + '" failed.'));
+				} else {
+					next();
 				}
-				grunt.log.writeln('\n' + result.stdout);
-				next();
 			});
 
 			cpCache.push(cp);
-		}, function () {
+		}, function (err) {
 			lpad.stdout();
+			if (err) {
+				grunt.warn(err.message);
+			}
 			cb();
 		});
 	});
