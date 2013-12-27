@@ -9,6 +9,12 @@ module.exports = function (grunt) {
 					logConcurrentOutput: true
 				},
 				tasks: ['nodemon', 'watch']
+			},
+			testCleanBlankLines: {
+				options: {
+					cleanBlankLines: true
+				},
+				tasks: ['test1', 'test2', 'test3']
 			}
 		},
 		simplemocha: {
