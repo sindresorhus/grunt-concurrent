@@ -13,6 +13,12 @@ module.exports = function (grunt) {
 		// Set the tasks based on the config format
 		var tasks = this.data.tasks || this.data;
 
+		function formatOutput(output) {
+			if(output && options.cleanBlankLines) {
+				output = output.replace(/(\r?\n)+/g,'\n');
+			}
+			return output;
+		}
 		// Optionally log the task output
 		if (options.logConcurrentOutput) {
 			spawnOptions = { stdio: 'inherit' };
@@ -26,9 +32,9 @@ module.exports = function (grunt) {
 				opts: spawnOptions
 			}, function (err, result, code) {
 				if (err || code > 0) {
-					grunt.warn(result.stderr || result.stdout);
+					grunt.warn(formatOutput(result.stderr || result.stdout));
 				}
-				grunt.log.writeln('\n' + result.stdout);
+				grunt.log.writeln(formatOutput('\n' + result.stdout));
 				next();
 			});
 
