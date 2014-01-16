@@ -13,6 +13,16 @@ module.exports = function (grunt) {
 		// Set the tasks based on the config format
 		var tasks = this.data.tasks || this.data;
 
+		// Warning if there are too many tasks to execute within the given limit
+		if (options.limit < tasks.length) {
+			grunt.log.oklns(
+				'Warning: There are more tasks than your concurrency limit. After ' +
+				'this limit is reached no further tasks will be run until the ' +
+				'current tasks are completed. You can adjust the limit in the ' + 
+				'concurrent task options'
+			);
+		}
+
 		// Optionally log the task output
 		if (options.logConcurrentOutput) {
 			spawnOptions = { stdio: 'inherit' };
