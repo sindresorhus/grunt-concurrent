@@ -28,7 +28,7 @@ describe('concurrent', function () {
 		var logOutput = '';
 
 		before(function (done) {
-			var cp = spawn('grunt', ['concurrent:log']);
+			var cp = spawn('grunt', ['concurrent:testLogConcurrentOutput']);
 			var lines = 0;
 
 			cp.stdout.setEncoding('utf8');
@@ -48,8 +48,18 @@ describe('concurrent', function () {
 		});
 
 		it('outputs concurrent logging', function () {
-			var expected = 'Running "concurrent:log" (concurrent) task';
+			var expected = 'Running "concurrent:testLogConcurrentOutput" (concurrent) task';
 			assert(logOutput.indexOf(expected) !== -1);
+		});
+	});
+
+	it('child process has expected output on failure', function (done) {
+		exec('grunt concurrent:testOutputFail', function (error, stdout, stderr) {
+			assert(stdout.indexOf('console.log called') !== -1);
+			assert(stdout.indexOf('console.error called') !== -1);
+			assert(stdout.indexOf('grunt.log called') !== -1);
+			assert(stdout.indexOf('grunt.warn called') !== -1);
+			done();
 		});
 	});
 });

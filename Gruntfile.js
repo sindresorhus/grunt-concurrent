@@ -4,11 +4,14 @@ module.exports = function (grunt) {
 		concurrent: {
 			test: ['test1', 'test2', 'test3'],
 			testargs: ['testargs1', 'testargs2'],
-			log: {
+			testLogConcurrentOutput: {
 				options: {
 					logConcurrentOutput: true
 				},
 				tasks: ['nodemon', 'watch']
+			},
+			testOutputFail: {
+				tasks: ['testoutputfail']
 			}
 		},
 		simplemocha: {
@@ -71,6 +74,14 @@ module.exports = function (grunt) {
 		var args = grunt.option.flags().join();
 		grunt.file.write('test/tmp/args2', args);
 	});
+
+	grunt.registerTask('testoutputfail', function () {
+		console.log('console.log called');
+		console.error('console.error called');
+		grunt.log.writeln('grunt.log called');
+		grunt.warn('grunt.warn called');
+	});
+
 
 	grunt.registerTask('default', [
 		'clean',
