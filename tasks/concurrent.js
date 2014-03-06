@@ -1,5 +1,5 @@
 'use strict';
-var lpad = require('lpad');
+var padStdio = require('pad-stdio');
 var async = require('async');
 var cpCache = [];
 
@@ -18,7 +18,7 @@ module.exports = function (grunt) {
 			grunt.log.oklns(
 				'Warning: There are more tasks than your concurrency limit. After ' +
 				'this limit is reached no further tasks will be run until the ' +
-				'current tasks are completed. You can adjust the limit in the ' + 
+				'current tasks are completed. You can adjust the limit in the ' +
 				'concurrent task options'
 			);
 		}
@@ -28,7 +28,7 @@ module.exports = function (grunt) {
 			spawnOptions = { stdio: 'inherit' };
 		}
 
-		lpad.stdout('    ');
+		padStdio.stdout('    ');
 		async.eachLimit(tasks, options.limit, function (task, next) {
 			var cp = grunt.util.spawn({
 				grunt: true,
@@ -44,7 +44,7 @@ module.exports = function (grunt) {
 
 			cpCache.push(cp);
 		}, function () {
-			lpad.stdout();
+			padStdio.stdout();
 			cb();
 		});
 	});

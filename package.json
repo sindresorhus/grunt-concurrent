@@ -10,36 +10,31 @@
     "optimize",
     "speed"
   ],
-  "homepage": "https://github.com/sindresorhus/grunt-concurrent",
-  "bugs": "https://github.com/sindresorhus/grunt-concurrent/issues",
   "author": {
     "name": "Sindre Sorhus",
     "email": "sindresorhus@gmail.com",
     "url": "http://sindresorhus.com"
   },
-  "repository": {
-    "type": "git",
-    "url": "git://github.com/sindresorhus/grunt-concurrent.git"
-  },
+  "repository": "sindresorhus/grunt-concurrent",
   "scripts": {
     "test": "npm install nodemon -g && grunt"
   },
   "dependencies": {
-    "lpad": "~0.1.0",
-    "async": "~0.2.9"
+    "async": "~0.2.9",
+    "pad-stdio": "^0.1.0"
   },
   "devDependencies": {
     "grunt": "~0.4.1",
     "grunt-contrib-clean": "~0.5.0",
     "grunt-simple-mocha": "~0.4.0",
     "grunt-contrib-watch": "~0.5.3",
-    "grunt-nodemon": "~0.1.2"
+    "grunt-nodemon": "^0.2.0"
   },
   "peerDependencies": {
     "grunt": "~0.4.0"
   },
   "engines": {
-    "node": ">=0.8.0"
+    "node": ">=0.10.0"
   },
   "licenses": {
     "type": "MIT"
