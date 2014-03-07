@@ -37,10 +37,7 @@ describe('concurrent', function () {
 
 				if (data.indexOf('\n') !== -1) {
 					lines++;
-				}
-
-				// need 4 lines to make sure it's captured
-				if (lines === 4) {
+				} else {
 					cp.kill();
 					done();
 				}
