@@ -1,4 +1,4 @@
-# grunt-concurrent [![Build Status](https://secure.travis-ci.org/sindresorhus/grunt-concurrent.png?branch=master)](http://travis-ci.org/sindresorhus/grunt-concurrent) [![Built with Grunt](https://cdn.gruntjs.com/builtwith.png)](http://gruntjs.com/)
+# grunt-concurrent [![Build Status](https://travis-ci.org/sindresorhus/grunt-concurrent.svg?branch=master)](https://travis-ci.org/sindresorhus/grunt-concurrent)
 
 > Run grunt tasks concurrently
 
@@ -13,8 +13,8 @@ This task is similar to grunt-parallel, but more focused by leaving out support 
 
 If you haven't used [grunt][] before, be sure to check out the [Getting Started][] guide, as it explains how to create a [gruntfile][Getting Started] as well as install and use grunt plugins. Once you're familiar with that process, install this plugin with this command:
 
-```sh
-npm install grunt-concurrent --save-dev
+```bash
+$ npm install grunt-concurrent --save-dev
 ```
 
 Once the plugin has been installed, it may be enabled inside your Gruntfile with this line of JavaScript:
@@ -41,7 +41,7 @@ Just specify the tasks you want to run concurrently as an array in a target of t
 
 This will first run the Coffee and Sass tasks at the same time, then the JSHint and Mocha tasks at the same time.
 
-```javascript
+```js
 grunt.initConfig({
 	concurrent: {
 		target1: ['coffee', 'sass'],
@@ -70,7 +70,7 @@ Default: `false`
 
 You can optionally log the output of your concurrent tasks by specifying the `logConcurrentOutput` option. Here is an example config which runs [grunt-nodemon](https://github.com/ChrisWren/grunt-nodemon) to launch and monitor a node server and [grunt-contrib-watch](https://github.com/gruntjs/grunt-contrib-watch) to watch for asset changes all in one terminal tab:
 
-```javascript
+```js
 grunt.initConfig({
 	concurrent: {
 		target: {
@@ -91,4 +91,4 @@ grunt.registerTask('default', ['concurrent:target']);
 
 ## License
 
-MIT © [Sindre Sorhus](http://sindresorhus.com)
+[MIT](http://opensource.org/licenses/MIT) © [Sindre Sorhus](http://sindresorhus.com)
