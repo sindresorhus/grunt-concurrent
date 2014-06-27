@@ -2,16 +2,25 @@
 var padStdio = require('pad-stdio');
 var async = require('async');
 var cpCache = [];
+var expandTargets = require('../lib/expandTargets.js');
 
 module.exports = function (grunt) {
 	grunt.registerMultiTask('concurrent', 'Run grunt tasks concurrently', function () {
 		var spawnOptions;
 		var cb = this.async();
 		var options = this.options({
-			limit: Math.max(require('os').cpus().length, 2)
+			limit: Math.max(require('os').cpus().length, 2),
+			concurrentTargets: false,
+			ignoreTargets: []
 		});
+		var ignoreTargets = options.ignoreTargets.concat(['options', 'files']);
+
 		// Set the tasks based on the config format
 		var tasks = this.data.tasks || this.data;
+		
+		if (options.concurrentTargets) {
+			tasks = expandTargets(tasks, ignoreTargets, grunt);
+		}
 
 		// Warning if there are too many tasks to execute within the given limit
 		if (options.limit < tasks.length) {
@@ -28,7 +37,7 @@ module.exports = function (grunt) {
 			spawnOptions = { stdio: 'inherit' };
 		}
 
-		padStdio.stdout('    ');
+		padStdio.stdout('     ');
 		async.eachLimit(tasks, options.limit, function (task, next) {
 			var cp = grunt.util.spawn({
 				grunt: true,

@@ -5,6 +5,7 @@ var fs = require('fs');
 var path = require('path');
 var spawn = require('child_process').spawn;
 var exec = require('child_process').exec;
+var expandTargets = require('../lib/expandTargets.js');
 
 
 describe('concurrent', function () {
@@ -48,5 +49,56 @@ describe('concurrent', function () {
 			var expected = 'Running "concurrent:log" (concurrent) task';
 			assert(logOutput.indexOf(expected) !== -1);
 		});
+	});
+
+	describe('`expandTargets` option', function () {
+		var fakeGrunt = {
+			config: {
+				getRaw: function() {
+					return {
+						taskA: {
+							targetA1: {},
+							targetA2: {},
+							options: {}
+						},
+						taskB: {
+							targetB1: {},
+							targetB2: {},
+							files: {}
+						},
+						taskC: {
+							targetC1: {},
+							targetC2: {},
+							files: {}
+						}
+					};
+				}
+			}
+		};
+
+		var tasks = ['taskA', 'taskB', 'taskC:targetC1']
+
+		var ignoreTargets = ['options', 'files']; 
+
+		var expected = [
+			'taskA:targetA1',
+			'taskB:targetB1',
+			'taskC:targetC1',
+			'taskA:targetA2',
+			'taskB:targetB2'
+		];
+
+		var explodedTargets = expandTargets(tasks, ignoreTargets, fakeGrunt);
+
+		it('expands tasks for each target and zippers results', function () {
+			assert.deepEqual(expected, explodedTargets);
+		});
+		it('ignores special targets', function () {
+			return ignoreTargets.forEach(function matchTarget (specialTarget) {
+				return explodedTargets.forEach(function matchSpecial (taskTarget) {
+					return assert(!taskTarget.match(specialTarget));
+				});
+			});
+		})
 	});
 });
