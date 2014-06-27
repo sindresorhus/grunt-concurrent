@@ -10,16 +10,15 @@ module.exports = function (grunt) {
 		var cb = this.async();
 		var options = this.options({
 			limit: Math.max(require('os').cpus().length, 2),
-            expandTargets: false,
+            concurrentTargets: false,
             ignoreTargets: []
 		});
         var ignoreTargets = options.ignoreTargets.concat(['options', 'files']);
 
 		// Set the tasks based on the config format
 		var tasks = this.data.tasks || this.data;
-        var taskTargets;
         
-        if (options.expandTargets) {
+        if (options.concurrentTargets) {
             tasks = expandTargets(tasks, ignoreTargets, grunt);
         }
 
