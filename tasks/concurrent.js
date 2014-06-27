@@ -37,7 +37,7 @@ module.exports = function (grunt) {
 			spawnOptions = { stdio: 'inherit' };
 		}
 
-		padStdio.stdout('	');
+		padStdio.stdout('     ');
 		async.eachLimit(tasks, options.limit, function (task, next) {
 			var cp = grunt.util.spawn({
 				grunt: true,
