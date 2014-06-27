@@ -88,6 +88,63 @@ grunt.registerTask('default', ['concurrent:target']);
 
 *Note the output will be messy when combining certain tasks. This option is best used with tasks that don't exit like watch and nodemon to monitor the output of long-running concurrent tasks.*
 
+## concurrentTargets 
+
+Type: `Boolean`
+Default: `false`
+
+Run individual targets of each task concurrently. This only applies to tasks specified without specific targets. Targets named `files` and `options` will be ignored, and additional tasks can be configured to be ignored as well (see `ignoreTargets` option).
+
+### Example
+
+Gruntfile:
+```js
+grunt.initConfig({
+    taskA: {
+        targetA1: {...},
+        targetA2: {...},
+        options: {...}
+    },
+    taskB: {
+        targetB1: {...},
+        targetB2: {...},
+        src: [...]
+    },
+    taskC: {
+        targetC1: {...},
+        targetC2: {...},
+        files: [...]
+    },
+    concurrent: {
+        target: {
+            tasks: ['taskA', 'taskB', 'taskC:targetC1'],
+            options: {
+                concurrentTargets: true,
+                ignoreTargets: ['src']
+            }
+        }
+    }
+};
+
+grunt.loadNpmTasks('grunt-concurrent');
+grunt.registerTask('default', ['concurrent:target']);
+```
+
+Given the above Gruntfile, processes will be spawned to run tasks in the following order (actual order of task completion is not guaranteed):
+```js
+'taskA:targetA1',
+'taskB:targetB1',
+'taskC:targetC1',
+'taskA:targetA2',
+'taskB:targetB2'
+```
+
+##ignoreTargets
+
+Type: `Array`
+Default: `[]`
+
+Task properties that should be ignored when expanding task-targets into tasks to be run concurrently. 
 
 ## License
 
