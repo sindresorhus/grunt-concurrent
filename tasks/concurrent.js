@@ -10,17 +10,17 @@ module.exports = function (grunt) {
 		var cb = this.async();
 		var options = this.options({
 			limit: Math.max(require('os').cpus().length, 2),
-            concurrentTargets: false,
-            ignoreTargets: []
+			concurrentTargets: false,
+			ignoreTargets: []
 		});
-        var ignoreTargets = options.ignoreTargets.concat(['options', 'files']);
+		var ignoreTargets = options.ignoreTargets.concat(['options', 'files']);
 
 		// Set the tasks based on the config format
 		var tasks = this.data.tasks || this.data;
-        
-        if (options.concurrentTargets) {
-            tasks = expandTargets(tasks, ignoreTargets, grunt);
-        }
+		
+		if (options.concurrentTargets) {
+			tasks = expandTargets(tasks, ignoreTargets, grunt);
+		}
 
 		// Warning if there are too many tasks to execute within the given limit
 		if (options.limit < tasks.length) {
@@ -37,9 +37,8 @@ module.exports = function (grunt) {
 			spawnOptions = { stdio: 'inherit' };
 		}
 
-		padStdio.stdout('    ');
+		padStdio.stdout('	');
 		async.eachLimit(tasks, options.limit, function (task, next) {
-            grunt.log.oklns('Spawning concurrent task: ' + task);
 			var cp = grunt.util.spawn({
 				grunt: true,
 				args: [task].concat(grunt.option.flags()),

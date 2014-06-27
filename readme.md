@@ -100,30 +100,30 @@ Run individual targets of each task concurrently. This only applies to tasks spe
 Gruntfile:
 ```js
 grunt.initConfig({
-    taskA: {
-        targetA1: {...},
-        targetA2: {...},
-        options: {...}
-    },
-    taskB: {
-        targetB1: {...},
-        targetB2: {...},
-        src: [...]
-    },
-    taskC: {
-        targetC1: {...},
-        targetC2: {...},
-        files: [...]
-    },
-    concurrent: {
-        target: {
-            tasks: ['taskA', 'taskB', 'taskC:targetC1'],
-            options: {
-                concurrentTargets: true,
-                ignoreTargets: ['src']
-            }
-        }
-    }
+	taskA: {
+		targetA1: {...},
+		targetA2: {...},
+		options: {...}
+	},
+	taskB: {
+		targetB1: {...},
+		targetB2: {...},
+		src: [...]
+	},
+	taskC: {
+		targetC1: {...},
+		targetC2: {...},
+		files: [...]
+	},
+	concurrent: {
+		target: {
+			tasks: ['taskA', 'taskB', 'taskC:targetC1'],
+			options: {
+				concurrentTargets: true,
+				ignoreTargets: ['src']
+			}
+		}
+	}
 };
 
 grunt.loadNpmTasks('grunt-concurrent');
