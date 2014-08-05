@@ -8,7 +8,8 @@ module.exports = function (grunt) {
 		var spawnOptions;
 		var cb = this.async();
 		var options = this.options({
-			limit: Math.max(require('os').cpus().length, 2)
+			limit: Math.max(require('os').cpus().length, 2),
+			gruntPath: false
 		});
 		// Set the tasks based on the config format
 		var tasks = this.data.tasks || this.data;
@@ -30,11 +31,16 @@ module.exports = function (grunt) {
 
 		padStdio.stdout('    ');
 		async.eachLimit(tasks, options.limit, function (task, next) {
-			var cp = grunt.util.spawn({
-				grunt: true,
+			var taskOptions = {
 				args: [task].concat(grunt.option.flags()),
 				opts: spawnOptions
-			}, function (err, result, code) {
+			};
+			if (options.gruntPath) {
+				taskOptions.cmd = options.gruntPath;
+			} else {
+				taskOptions.grunt = true;
+			}
+			var cp = grunt.util.spawn(taskOptions, function (err, result, code) {
 				if (err || code > 0) {
 					grunt.warn(result.stderr || result.stdout);
 				}
