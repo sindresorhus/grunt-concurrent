@@ -1,4 +1,5 @@
 'use strict';
+var os = require('os');
 var padStdio = require('pad-stdio');
 var async = require('async');
 var cpCache = [];
@@ -8,7 +9,7 @@ module.exports = function (grunt) {
 		var spawnOptions;
 		var cb = this.async();
 		var options = this.options({
-			limit: Math.max(require('os').cpus().length, 2)
+			limit: Math.max((os.cpus().length || 1) * 2, 2)
 		});
 		// Set the tasks based on the config format
 		var tasks = this.data.tasks || this.data;
