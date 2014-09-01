@@ -1,11 +1,9 @@
-/*global describe, it, before */
 'use strict';
 var assert = require('assert');
 var fs = require('fs');
 var path = require('path');
 var spawn = require('child_process').spawn;
 var exec = require('child_process').exec;
-
 
 describe('concurrent', function () {
 	it('runs grunt tasks successfully', function () {
@@ -34,13 +32,8 @@ describe('concurrent', function () {
 			cp.stdout.setEncoding('utf8');
 			cp.stdout.on('data', function (data) {
 				logOutput += data;
-
-				if (data.indexOf('\n') !== -1) {
-					lines++;
-				} else {
-					cp.kill();
-					done();
-				}
+				cp.kill();
+				done();
 			});
 		});
 
