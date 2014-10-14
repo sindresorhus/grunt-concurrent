@@ -28,10 +28,10 @@ module.exports = function (grunt) {
 		if (options.logConcurrentOutput) {
 			spawnOptions.stdio = 'inherit';
 		}
-    
-    if (options.cwd) {
-      spawnOptions.cwd = options.cwd;
-    }
+
+		if (options.cwd) {
+			spawnOptions.cwd = options.cwd;
+		}
 
 		padStdio.stdout('    ');
 		async.eachLimit(tasks, options.limit, function (task, next) {
