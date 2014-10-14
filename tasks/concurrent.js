@@ -6,7 +6,7 @@ var cpCache = [];
 
 module.exports = function (grunt) {
 	grunt.registerMultiTask('concurrent', 'Run grunt tasks concurrently', function () {
-		var spawnOptions;
+		var spawnOptions = {};
 		var cb = this.async();
 		var options = this.options({
 			limit: Math.max((os.cpus().length || 1) * 2, 2)
@@ -26,8 +26,12 @@ module.exports = function (grunt) {
 
 		// Optionally log the task output
 		if (options.logConcurrentOutput) {
-			spawnOptions = { stdio: 'inherit' };
+			spawnOptions.stdio = 'inherit';
 		}
+    
+    if (options.cwd) {
+      spawnOptions.cwd = options.cwd;
+    }
 
 		padStdio.stdout('    ');
 		async.eachLimit(tasks, options.limit, function (task, next) {
