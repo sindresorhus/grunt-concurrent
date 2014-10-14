@@ -66,8 +66,8 @@ grunt.registerTask('default', ['concurrent:target']);
 
 ### Gruntfile path
 
-Type: `string`
-Default: null
+Type: `string`  
+Default: `null`
 
 You can optionally define the working directory for concurrent tasks to spawn with.  This is useful if your Grunt path is in a sub-directory from your project files.
 
