@@ -26,6 +26,8 @@ grunt.initConfig({
 	}
 });
 
+// tasks of target1 run concurrently, after they all finished, tasks of target2 run concurrently,
+// instead of target1 and target2 run concurrently.
 grunt.registerTask('default', ['concurrent:target1', 'concurrent:target2']);
 ```
 
