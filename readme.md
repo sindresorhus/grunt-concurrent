@@ -66,6 +66,26 @@ grunt.registerTask('default', ['concurrent:target']);
 
 *The output will be messy when combining certain tasks. This option is best used with tasks that don't exit like `watch` and `nodemon` to monitor the output of long-running concurrent tasks.*
 
+### Gruntfile path
+
+Type: `string`  
+Default: `null`
+
+You can optionally define the working directory for concurrent tasks to spawn with.  This is useful if your Grunt path is in a sub-directory from your project files.
+
+```js
+
+grunt.initConfig({
+	concurrent: {
+		target: {
+			tasks: ['coffee', 'sass'],
+			options: {
+				cwd: "path/to/gruntfile"
+			}
+		}
+	}
+});
+```
 
 ## License
 
