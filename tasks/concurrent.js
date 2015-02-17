@@ -26,7 +26,7 @@ module.exports = function (grunt) {
 
 		// Optionally log the task output
 		if (options.logConcurrentOutput) {
-			spawnOptions = { stdio: 'inherit' };
+		    spawnOptions = { stdio: ['ignore', process.stdout, process.stderr] };
 		}
 
 		padStdio.stdout('    ');
