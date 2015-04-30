@@ -29,7 +29,11 @@ module.exports = function (grunt) {
 			spawnOptions = { stdio: 'inherit' };
 		}
 
-		padStdio.stdout('    ');
+		// Pad task output
+		if (options.padOutput !== false) {
+			padStdio.stdout('    ');
+		}
+
 		async.eachLimit(tasks, options.limit, function (task, next) {
 			var cp = grunt.util.spawn({
 				grunt: true,
@@ -45,7 +49,9 @@ module.exports = function (grunt) {
 
 			cpCache.push(cp);
 		}, function () {
-			padStdio.stdout();
+			if (options.padOutput !== false) {
+				padStdio.stdout();
+			}
 			cb();
 		});
 	});
