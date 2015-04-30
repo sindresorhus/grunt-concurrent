@@ -41,6 +41,13 @@ Default: Twice the number of CPU cores with a minimum of 2
 
 Limit how many tasks that are run concurrently.
 
+### padOutput
+
+Type: `boolean`
+Default: `true`
+
+Pad the task output with 4 spaces to visually distinguish the concurrent tasks.
+
 ### logConcurrentOutput
 
 Type: `boolean`  
