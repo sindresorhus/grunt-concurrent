@@ -26,7 +26,9 @@ module.exports = function (grunt) {
 
 		// Optionally log the task output
 		if (options.logConcurrentOutput) {
-		    spawnOptions = { stdio: ['ignore', process.stdout, process.stderr] };
+			spawnOptions = {
+				stdio: ['ignore', process.stdout, process.stderr]
+			};
 		}
 
 		padStdio.stdout('    ');
@@ -35,16 +37,20 @@ module.exports = function (grunt) {
 				grunt: true,
 				args: [task].concat(grunt.option.flags()),
 				opts: spawnOptions
-			}, function (err, result, code) {
-				if (err || code > 0) {
-					grunt.warn(result.stderr || result.stdout);
+			}, function (err, result) {
+				if (!options.logConcurrentOutput) {
+					grunt.log.writeln('\n' + result.stdout + result.stderr);
 				}
-				grunt.log.writeln('\n' + result.stdout);
-				next();
+
+				next(err);
 			});
 
 			cpCache.push(cp);
-		}, function () {
+		}, function (err) {
+			if (err) {
+				grunt.warn(err);
+			}
+
 			padStdio.stdout();
 			cb();
 		});
