@@ -23,7 +23,7 @@
     "tasks"
   ],
   "dependencies": {
-    "async": "^0.9.0",
+    "async": "^1.2.1",
     "pad-stdio": "^1.0.0"
   },
   "devDependencies": {
@@ -31,7 +31,7 @@
     "grunt-cli": "^0.1.13",
     "grunt-contrib-clean": "^0.6.0",
     "grunt-contrib-watch": "^0.6.1",
-    "grunt-nodemon": "^0.3.0",
+    "grunt-nodemon": "^0.4.0",
     "grunt-simple-mocha": "^0.4.0",
     "nodemon": "^1.2.1"
   },
