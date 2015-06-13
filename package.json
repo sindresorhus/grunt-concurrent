@@ -8,12 +8,16 @@
     "parallel",
     "simultaneous",
     "optimize",
-    "speed"
+    "speed",
+    "perf",
+    "performance",
+    "fast",
+    "faster"
   ],
   "author": {
     "name": "Sindre Sorhus",
     "email": "sindresorhus@gmail.com",
-    "url": "http://sindresorhus.com"
+    "url": "sindresorhus.com"
   },
   "repository": "sindresorhus/grunt-concurrent",
   "scripts": {

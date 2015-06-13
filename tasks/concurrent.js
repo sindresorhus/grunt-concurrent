@@ -6,16 +6,14 @@ var cpCache = [];
 
 module.exports = function (grunt) {
 	grunt.registerMultiTask('concurrent', 'Run grunt tasks concurrently', function () {
-		var spawnOptions;
 		var cb = this.async();
-		var options = this.options({
+		var opts = this.options({
 			limit: Math.max((os.cpus().length || 1) * 2, 2)
 		});
-		// Set the tasks based on the config format
 		var tasks = this.data.tasks || this.data;
+		var flags = grunt.option.flags();
 
-		// Warning if there are too many tasks to execute within the given limit
-		if (options.limit < tasks.length) {
+		if (opts.limit < tasks.length) {
 			grunt.log.oklns(
 				'Warning: There are more tasks than your concurrency limit. After ' +
 				'this limit is reached no further tasks will be run until the ' +
@@ -25,20 +23,22 @@ module.exports = function (grunt) {
 		}
 
 		// Optionally log the task output
-		if (options.logConcurrentOutput) {
-			spawnOptions = {
+		var spawnOpts;
+		if (opts.logConcurrentOutput) {
+			spawnOpts = {
 				stdio: ['ignore', process.stdout, process.stderr]
 			};
 		}
 
 		padStdio.stdout('    ');
-		async.eachLimit(tasks, options.limit, function (task, next) {
+
+		async.eachLimit(tasks, opts.limit, function (task, next) {
 			var cp = grunt.util.spawn({
 				grunt: true,
-				args: [task].concat(grunt.option.flags()),
-				opts: spawnOptions
+				args: [task].concat(flags),
+				opts: spawnOpts
 			}, function (err, result) {
-				if (!options.logConcurrentOutput) {
+				if (!opts.logConcurrentOutput) {
 					grunt.log.writeln('\n' + result.stdout + result.stderr);
 				}
 
