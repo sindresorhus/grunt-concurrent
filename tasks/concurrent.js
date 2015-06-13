@@ -54,6 +54,6 @@ module.exports = function (grunt) {
 // make sure all child processes are killed when grunt exits
 process.on('exit', function () {
 	cpCache.forEach(function (el) {
-		el.kill();
+		el.kill('SIGKILL');
 	});
 });
