@@ -22,21 +22,15 @@ module.exports = function (grunt) {
 			);
 		}
 
-		// Optionally log the task output
-		var spawnOpts;
-		if (opts.logConcurrentOutput) {
-			spawnOpts = {
-				stdio: ['ignore', process.stdout, process.stderr]
-			};
-		}
-
 		padStdio.stdout('    ');
 
 		async.eachLimit(tasks, opts.limit, function (task, next) {
 			var cp = grunt.util.spawn({
 				grunt: true,
 				args: [task].concat(flags),
-				opts: spawnOpts
+				opts: {
+					stdio: ['ignore', 'pipe', 'pipe']
+				}
 			}, function (err, result) {
 				if (!opts.logConcurrentOutput) {
 					grunt.log.writeln('\n' + result.stdout + result.stderr);
@@ -44,6 +38,11 @@ module.exports = function (grunt) {
 
 				next(err);
 			});
+
+			if (opts.logConcurrentOutput) {
+				cp.stdout.pipe(process.stdout);
+				cp.stderr.pipe(process.stderr);
+			}
 
 			cpCache.push(cp);
 		}, function (err) {

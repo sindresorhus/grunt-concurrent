@@ -9,7 +9,7 @@ Running slow tasks like Coffee and Sass concurrently can potentially improve you
 
 ## Install
 
-```sh
+```
 $ npm install --save-dev grunt-concurrent
 ```
 
