@@ -4,12 +4,13 @@ var fs = require('fs');
 var path = require('path');
 var spawn = require('child_process').spawn;
 var exec = require('child_process').exec;
+var pathExists = require('path-exists');
 
 describe('concurrent', function () {
 	it('runs grunt tasks successfully', function () {
-		assert(fs.existsSync(path.join(__dirname, 'tmp/1')));
-		assert(fs.existsSync(path.join(__dirname, 'tmp/2')));
-		assert(fs.existsSync(path.join(__dirname, 'tmp/3')));
+		assert(pathExists.sync(path.join(__dirname, 'tmp/1')));
+		assert(pathExists.sync(path.join(__dirname, 'tmp/2')));
+		assert(pathExists.sync(path.join(__dirname, 'tmp/3')));
 	});
 
 	it('forwards CLI args to grunt sub-processes', function (done) {
