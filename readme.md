@@ -41,6 +41,24 @@ Default: Twice the number of CPU cores with a minimum of 2
 
 Limit how many tasks that are run concurrently.
 
+### flags
+
+Type: `Object`  
+Default: `{}`
+
+Merge & overrides task flags.
+
+```js
+target: {
+	tasks: ['nodemon', 'watch'],
+	options: {
+		flags: {
+			foo: 'value'
+		}
+	}
+}
+```
+
 ### logConcurrentOutput
 
 Type: `boolean`  
