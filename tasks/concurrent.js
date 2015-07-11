@@ -12,6 +12,9 @@ module.exports = function (grunt) {
 		});
 		var tasks = this.data.tasks || this.data;
 		var flags = grunt.option.flags();
+		var newFlags = Object.keys(opts.flags || {}).map(function(key){
+			return '--' + key + '=' + opts.flags[key];
+		});
 
 		if (opts.limit < tasks.length) {
 			grunt.log.oklns(
@@ -27,7 +30,7 @@ module.exports = function (grunt) {
 		async.eachLimit(tasks, opts.limit, function (task, next) {
 			var cp = grunt.util.spawn({
 				grunt: true,
-				args: [task].concat(flags),
+				args: [task].concat(flags).concat(newFlags),
 				opts: {
 					stdio: ['ignore', 'pipe', 'pipe']
 				}
