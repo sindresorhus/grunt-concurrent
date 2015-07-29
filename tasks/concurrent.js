@@ -1,6 +1,6 @@
 'use strict';
 var os = require('os');
-var padStdio = require('pad-stdio');
+var padStream = require('pad-stream');
 var async = require('async');
 var cpCache = [];
 
@@ -22,8 +22,6 @@ module.exports = function (grunt) {
 			);
 		}
 
-		padStdio.stdout('    ');
-
 		async.eachLimit(tasks, opts.limit, function (task, next) {
 			var cp = grunt.util.spawn({
 				grunt: true,
@@ -40,8 +38,8 @@ module.exports = function (grunt) {
 			});
 
 			if (opts.logConcurrentOutput) {
-				cp.stdout.pipe(process.stdout);
-				cp.stderr.pipe(process.stderr);
+				cp.stdout.pipe(padStream(' ', 4)).pipe(process.stdout);
+				cp.stderr.pipe(padStream(' ', 4)).pipe(process.stderr);
 			}
 
 			cpCache.push(cp);
@@ -50,7 +48,6 @@ module.exports = function (grunt) {
 				grunt.warn(err);
 			}
 
-			padStdio.stdout();
 			cb();
 		});
 	});

@@ -28,7 +28,7 @@
   ],
   "dependencies": {
     "async": "^1.2.1",
-    "pad-stdio": "^2.0.0"
+    "pad-stream": "^1.0.0"
   },
   "devDependencies": {
     "grunt": "^0.4.5",
