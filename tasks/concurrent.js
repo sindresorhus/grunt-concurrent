@@ -2,6 +2,7 @@
 var os = require('os');
 var padStream = require('pad-stream');
 var async = require('async');
+var indentString = require('indent-string');
 var cpCache = [];
 
 module.exports = function (grunt) {
@@ -31,7 +32,7 @@ module.exports = function (grunt) {
 				}
 			}, function (err, result) {
 				if (!opts.logConcurrentOutput) {
-					grunt.log.writeln('\n' + result.stdout + result.stderr);
+					grunt.log.writeln('\n' + indentString(result.stdout + result.stderr, ' ', 4));
 				}
 
 				next(err);
