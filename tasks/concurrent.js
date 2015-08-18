@@ -54,9 +54,12 @@ module.exports = function (grunt) {
 	});
 };
 
-// make sure all child processes are killed when grunt exits
-process.on('exit', function () {
+function cleanup () {
 	cpCache.forEach(function (el) {
 		el.kill('SIGKILL');
 	});
-});
+}
+
+// make sure all child processes are killed when grunt exits
+process.on('exit', cleanup);
+process.on('SIGINT', cleanup);
