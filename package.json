@@ -21,7 +21,7 @@
   },
   "repository": "sindresorhus/grunt-concurrent",
   "scripts": {
-    "test": "grunt"
+    "test": "xo && grunt"
   },
   "files": [
     "tasks"
@@ -39,10 +39,17 @@
     "grunt-nodemon": "^0.4.0",
     "grunt-simple-mocha": "^0.4.0",
     "nodemon": "^1.2.1",
-    "path-exists": "^1.0.0"
+    "path-exists": "^1.0.0",
+    "xo": "*"
   },
   "engines": {
     "node": ">=0.10.0"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "xo": {
+    "envs": [
+      "node",
+      "mocha"
+    ]
+  }
 }

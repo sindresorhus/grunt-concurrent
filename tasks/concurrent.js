@@ -54,7 +54,7 @@ module.exports = function (grunt) {
 	});
 };
 
-function cleanup () {
+function cleanup() {
 	cpCache.forEach(function (el) {
 		el.kill('SIGKILL');
 	});

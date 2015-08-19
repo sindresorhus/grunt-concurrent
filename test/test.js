@@ -28,7 +28,6 @@ describe('concurrent', function () {
 
 		before(function (done) {
 			var cp = spawn('grunt', ['concurrent:log']);
-			var lines = 0;
 
 			cp.stdout.setEncoding('utf8');
 			cp.stdout.on('data', function (data) {
