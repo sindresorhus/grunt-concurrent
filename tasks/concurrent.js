@@ -62,4 +62,7 @@ function cleanup() {
 
 // make sure all child processes are killed when grunt exits
 process.on('exit', cleanup);
-process.on('SIGINT', cleanup);
+process.on('SIGINT', function () {
+	cleanup();
+	process.exit();
+});
