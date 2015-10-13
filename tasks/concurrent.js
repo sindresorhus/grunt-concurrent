@@ -28,6 +28,7 @@ module.exports = function (grunt) {
 				grunt: true,
 				args: [task].concat(flags),
 				opts: {
+					cwd: opts.cwd,
 					stdio: ['ignore', 'pipe', 'pipe']
 				}
 			}, function (err, result) {

@@ -66,6 +66,12 @@ grunt.registerTask('default', ['concurrent:target']);
 
 *The output will be messy when combining certain tasks. This option is best used with tasks that don't exit like `watch` and `nodemon` to monitor the output of long-running concurrent tasks.*
 
+### cwd
+
+Type: `string`
+Default: Current working directory of grunt process
+
+Set current working directory of the child processes.
 
 ## License
 
