@@ -28,6 +28,7 @@
   ],
   "dependencies": {
     "async": "^1.2.1",
+    "cross-spawn": "^2.0.0",
     "indent-string": "^2.0.0",
     "pad-stream": "^1.0.0"
   },

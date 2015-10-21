@@ -2,7 +2,7 @@
 var assert = require('assert');
 var fs = require('fs');
 var path = require('path');
-var spawn = require('child_process').spawn;
+var spawn = require('cross-spawn');
 var exec = require('child_process').exec;
 var pathExists = require('path-exists');
 
