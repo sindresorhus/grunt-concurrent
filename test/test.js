@@ -3,8 +3,8 @@ var assert = require('assert');
 var fs = require('fs');
 var path = require('path');
 var spawn = require('cross-spawn');
-var exec = require('child_process').exec;
 var pathExists = require('path-exists');
+var exec = require('child_process').exec;
 
 describe('concurrent', function () {
 	it('runs grunt tasks successfully', function () {
