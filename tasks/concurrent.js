@@ -14,6 +14,14 @@ module.exports = function (grunt) {
 		var tasks = this.data.tasks || this.data;
 		var flags = grunt.option.flags();
 
+		if (flags.indexOf('--no-color') === -1 &&
+			flags.indexOf('--no-colors') === -1 &&
+			flags.indexOf('--color=false') === -1) {
+			// append the flag so that support-colors won't return false
+			// see issue #70 for details
+			flags.push('--color');
+		}
+
 		if (opts.limit < tasks.length) {
 			grunt.log.oklns(
 				'Warning: There are more tasks than your concurrency limit. After ' +
