@@ -77,7 +77,7 @@ module.exports = function (grunt) {
 
 	grunt.registerTask('colorcheck', function () {
 		// writes 'true' or 'false' to the file
-		var supports = '' + !!supportsColor;
+		var supports = String(Boolean(supportsColor));
 		grunt.file.write('test/tmp/colors', supports);
 	});
 
