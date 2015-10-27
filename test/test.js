@@ -17,8 +17,10 @@ describe('concurrent', function () {
 		var expected = '--arg1=test,--arg2';
 
 		exec('grunt concurrent:testargs ' + expected, function () {
-			assert.equal(fs.readFileSync(path.join(__dirname, 'tmp/args1'), 'utf8'), expected);
-			assert.equal(fs.readFileSync(path.join(__dirname, 'tmp/args2'), 'utf8'), expected);
+			var args1 = fs.readFileSync(path.join(__dirname, 'tmp/args1'), 'utf8');
+			var args2 = fs.readFileSync(path.join(__dirname, 'tmp/args2'), 'utf8');
+			assert.ok(args1.indexOf(expected) !== -1);
+			assert.ok(args2.indexOf(expected) !== -1);
 			done();
 		});
 	});
@@ -27,19 +29,39 @@ describe('concurrent', function () {
 		var logOutput = '';
 
 		before(function (done) {
+			var doneCalled = false;
 			var cp = spawn('grunt', ['concurrent:log']);
 
 			cp.stdout.setEncoding('utf8');
 			cp.stdout.on('data', function (data) {
 				logOutput += data;
 				cp.kill();
-				done();
+				if (!doneCalled) {
+					doneCalled = true;
+					done();
+				}
 			});
 		});
 
 		it('outputs concurrent logging', function () {
 			var expected = 'Running "concurrent:log" (concurrent) task';
 			assert(logOutput.indexOf(expected) !== -1);
+		});
+	});
+
+	describe('works with supports-color lib', function () {
+		it('ensures that colors are supported by default', function (done) {
+			exec('grunt concurrent:colors', function () {
+				assert.equal(fs.readFileSync(path.join(__dirname, 'tmp/colors'), 'utf8'), 'true');
+				done();
+			});
+		});
+
+		it('doesn\'t support colors with --no-color option', function (done) {
+			exec('grunt concurrent:colors --no-color', function () {
+				assert.equal(fs.readFileSync(path.join(__dirname, 'tmp/colors'), 'utf8'), 'false');
+				done();
+			});
 		});
 	});
 });

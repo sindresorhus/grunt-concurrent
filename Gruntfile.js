@@ -1,4 +1,6 @@
 'use strict';
+var supportsColor = require('supports-color');
+
 module.exports = function (grunt) {
 	grunt.initConfig({
 		concurrent: {
@@ -9,7 +11,8 @@ module.exports = function (grunt) {
 					logConcurrentOutput: true
 				},
 				tasks: ['nodemon', 'watch']
-			}
+			},
+			colors: ['colorcheck']
 		},
 		simplemocha: {
 			test: {
@@ -70,6 +73,12 @@ module.exports = function (grunt) {
 	grunt.registerTask('testargs2', function () {
 		var args = grunt.option.flags().join();
 		grunt.file.write('test/tmp/args2', args);
+	});
+
+	grunt.registerTask('colorcheck', function () {
+		// writes 'true' or 'false' to the file
+		var supports = String(Boolean(supportsColor));
+		grunt.file.write('test/tmp/colors', supports);
 	});
 
 	grunt.registerTask('default', [
