@@ -13,6 +13,12 @@ describe('concurrent', function () {
 		assert(pathExists.sync(path.join(__dirname, 'tmp/3')));
 	});
 
+	it('runs grunt task sequence successfully', function () {
+		var file5 = fs.statSync(path.join(__dirname, 'tmp/5'));
+		var file6 = fs.statSync(path.join(__dirname, 'tmp/6'));
+		assert.ok(Date.parse(file5.ctime) < Date.parse(file6.ctime));
+	});
+
 	it('forwards CLI args to grunt sub-processes', function (done) {
 		var expected = '--arg1=test,--arg2';
 

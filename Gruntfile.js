@@ -5,6 +5,7 @@ module.exports = function (grunt) {
 	grunt.initConfig({
 		concurrent: {
 			test: ['test1', 'test2', 'test3'],
+			testSequence: ['test4', ['test5', 'test6']],
 			testargs: ['testargs1', 'testargs2'],
 			log: {
 				options: {
@@ -65,6 +66,22 @@ module.exports = function (grunt) {
 		grunt.file.write('test/tmp/3');
 	});
 
+	grunt.registerTask('test4', function () {
+		console.log('test4');
+		grunt.file.write('test/tmp/4');
+	});
+
+	grunt.registerTask('test5', function () {
+		console.log('test5');
+		grunt.file.write('test/tmp/5');
+		sleep(1000);
+	});
+
+	grunt.registerTask('test6', function () {
+		console.log('test6');
+		grunt.file.write('test/tmp/6');
+	});
+
 	grunt.registerTask('testargs1', function () {
 		var args = grunt.option.flags().join();
 		grunt.file.write('test/tmp/args1', args);
@@ -84,7 +101,17 @@ module.exports = function (grunt) {
 	grunt.registerTask('default', [
 		'clean',
 		'concurrent:test',
+		'concurrent:testSequence',
 		'simplemocha',
 		'clean'
 	]);
 };
+
+function sleep(milliseconds) {
+	var start = new Date().getTime();
+	for (var i = 0; i < 1e7; i++) {
+		if ((new Date().getTime() - start) > milliseconds) {
+			break;
+		}
+	}
+}
