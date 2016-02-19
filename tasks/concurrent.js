@@ -2,6 +2,7 @@
 var os = require('os');
 var padStream = require('pad-stream');
 var async = require('async');
+var arrify = require('arrify');
 var indentString = require('indent-string');
 var cpCache = [];
 
@@ -34,7 +35,7 @@ module.exports = function (grunt) {
 		async.eachLimit(tasks, opts.limit, function (task, next) {
 			var cp = grunt.util.spawn({
 				grunt: true,
-				args: [task].concat(flags),
+				args: arrify(task).concat(flags),
 				opts: {
 					stdio: ['ignore', 'pipe', 'pipe']
 				}

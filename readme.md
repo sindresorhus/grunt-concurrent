@@ -31,6 +31,17 @@ grunt.initConfig({
 grunt.registerTask('default', ['concurrent:target1', 'concurrent:target2']);
 ```
 
+## Sequential tasks in concurrent target
+
+```js
+grunt.initConfig({
+	concurrent: {
+		target: [['jshint', 'coffee'], 'sass']
+	}
+});
+```
+Now `jshint` will always be done before `coffee` and `sass` runs independent of both of them.
+
 
 ## Options
 
