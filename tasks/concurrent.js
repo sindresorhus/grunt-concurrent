@@ -4,6 +4,7 @@ var padStream = require('pad-stream');
 var async = require('async');
 var arrify = require('arrify');
 var indentString = require('indent-string');
+
 var cpCache = [];
 
 module.exports = function (grunt) {
@@ -73,5 +74,5 @@ function cleanup() {
 process.on('exit', cleanup);
 process.on('SIGINT', function () {
 	cleanup();
-	process.exit();
+	process.exit(); // eslint-disable-line xo/no-process-exit
 });
