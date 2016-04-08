@@ -26,6 +26,10 @@
   "files": [
     "tasks"
   ],
+  "engines": {
+    "node": ">=0.10.0"
+  },
+  "license": "MIT",
   "dependencies": {
     "arrify": "^1.0.1",
     "async": "^1.2.1",
@@ -45,14 +49,7 @@
     "supports-color": "^3.1.2",
     "xo": "*"
   },
-  "engines": {
-    "node": ">=0.10.0"
-  },
-  "license": "MIT",
-  "xo": {
-    "envs": [
-      "node",
-      "mocha"
-    ]
+  "peerDependencies": {
+    "grunt": ">=0.4.0"
   }
 }
