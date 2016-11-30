@@ -11,7 +11,8 @@ module.exports = function (grunt) {
 	grunt.registerMultiTask('concurrent', 'Run grunt tasks concurrently', function () {
 		var cb = this.async();
 		var opts = this.options({
-			limit: Math.max((os.cpus().length || 1) * 2, 2)
+			limit: Math.max((os.cpus().length || 1) * 2, 2),
+			indent: 4
 		});
 		var tasks = this.data.tasks || this.data;
 		var flags = grunt.option.flags();
@@ -42,15 +43,15 @@ module.exports = function (grunt) {
 				}
 			}, function (err, result) {
 				if (!opts.logConcurrentOutput) {
-					grunt.log.writeln('\n' + indentString(result.stdout + result.stderr, ' ', 4));
+					grunt.log.writeln('\n' + indentString(result.stdout + result.stderr, ' ', opts.indent));
 				}
 
 				next(err);
 			});
 
 			if (opts.logConcurrentOutput) {
-				cp.stdout.pipe(padStream(' ', 4)).pipe(process.stdout);
-				cp.stderr.pipe(padStream(' ', 4)).pipe(process.stderr);
+				cp.stdout.pipe(padStream(' ', opts.indent)).pipe(process.stdout);
+				cp.stderr.pipe(padStream(' ', opts.indent)).pipe(process.stderr);
 			}
 
 			cpCache.push(cp);
