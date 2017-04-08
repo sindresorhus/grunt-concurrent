@@ -13,7 +13,7 @@ module.exports = function (grunt) {
 		var opts = this.options({
 			limit: Math.max((os.cpus().length || 1) * 2, 2)
 		});
-		var tasks = this.data.tasks || this.data;
+		var tasks = (this.data.tasks || this.data).map(normalizeTask);
 		var flags = grunt.option.flags();
 
 		if (flags.indexOf('--no-color') === -1 &&
@@ -36,9 +36,10 @@ module.exports = function (grunt) {
 		async.eachLimit(tasks, opts.limit, function (task, next) {
 			var cp = grunt.util.spawn({
 				grunt: true,
-				args: arrify(task).concat(flags),
+				args: arrify(task).map(taskName).concat(flags),
 				opts: {
-					stdio: ['ignore', 'pipe', 'pipe']
+					stdio: ['ignore', 'pipe', 'pipe'],
+					env: Object.assign({}, process.env, task.env)
 				}
 			}, function (err, result) {
 				if (!opts.logConcurrentOutput) {
@@ -63,6 +64,19 @@ module.exports = function (grunt) {
 		});
 	});
 };
+
+function normalizeTask(task) {
+	if (typeof task === 'string') {
+		return { name: task };
+	} else if (Array.isArray(task)) {
+		return task.map(normalizeTask);
+	}
+	return task;
+}
+
+function taskName(task) {
+	return task.name;
+}
 
 function cleanup() {
 	cpCache.forEach(function (el) {
