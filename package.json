@@ -21,7 +21,7 @@
   },
   "repository": "sindresorhus/grunt-concurrent",
   "scripts": {
-    "test": "xo && grunt"
+    "test": "xo --no-esnext && grunt"
   },
   "files": [
     "tasks"

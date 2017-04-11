@@ -83,6 +83,22 @@ grunt.registerTask('default', ['concurrent:target']);
 
 *The output will be messy when combining certain tasks. This option is best used with tasks that don't exit like `watch` and `nodemon` to monitor the output of long-running concurrent tasks.*
 
+### env
+
+Type: `{[key: string]: string}`
+Default: `{}`
+
+Defined environment variable overrides on specific tasks
+
+```js
+grunt.initConfig({
+        concurrent: {
+                target: {
+                        tasks: ['watch', {name: 'server', env: {NODE_ENV: 'development'}}]
+                }
+        }
+});
+```
 
 ## License
 

@@ -7,7 +7,7 @@ module.exports = function (grunt) {
 			test: ['test1', 'test2', 'test3'],
 			testSequence: ['test4', ['test5', 'test6']],
 			testargs: ['testargs1', 'testargs2'],
-			testenv: [{ name: 'testenv1', env: { testenv: 'testenv1' } }, 'testenv2'],
+			testenv: [{name: 'testenv1', env: {testenv: 'testenv1'}}, 'testenv2'],
 			log: {
 				options: {
 					logConcurrentOutput: true
@@ -94,7 +94,7 @@ module.exports = function (grunt) {
 	});
 
 	grunt.registerTask('colorcheck', function () {
-		// writes 'true' or 'false' to the file
+		// Writes 'true' or 'false' to the file
 		var supports = String(Boolean(supportsColor));
 		grunt.file.write('test/tmp/colors', supports);
 	});

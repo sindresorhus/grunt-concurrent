@@ -19,8 +19,8 @@ module.exports = function (grunt) {
 		if (flags.indexOf('--no-color') === -1 &&
 			flags.indexOf('--no-colors') === -1 &&
 			flags.indexOf('--color=false') === -1) {
-			// append the flag so that support-colors won't return false
-			// see issue #70 for details
+			// Append the flag so that support-colors won't return false
+			// See issue #70 for details
 			flags.push('--color');
 		}
 
@@ -67,7 +67,7 @@ module.exports = function (grunt) {
 
 function normalizeTask(task) {
 	if (typeof task === 'string') {
-		return { name: task };
+		return {name: task};
 	} else if (Array.isArray(task)) {
 		return task.map(normalizeTask);
 	}
@@ -84,7 +84,7 @@ function cleanup() {
 	});
 }
 
-// make sure all child processes are killed when grunt exits
+// Make sure all child processes are killed when grunt exits
 process.on('exit', cleanup);
 process.on('SIGINT', function () {
 	cleanup();
