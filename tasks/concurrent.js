@@ -4,6 +4,7 @@ var padStream = require('pad-stream');
 var async = require('async');
 var arrify = require('arrify');
 var indentString = require('indent-string');
+var extend = require('extend');
 
 var cpCache = [];
 
@@ -13,14 +14,14 @@ module.exports = function (grunt) {
 		var opts = this.options({
 			limit: Math.max((os.cpus().length || 1) * 2, 2)
 		});
-		var tasks = this.data.tasks || this.data;
+		var tasks = (this.data.tasks || this.data).map(normalizeTask);
 		var flags = grunt.option.flags();
 
 		if (flags.indexOf('--no-color') === -1 &&
 			flags.indexOf('--no-colors') === -1 &&
 			flags.indexOf('--color=false') === -1) {
-			// append the flag so that support-colors won't return false
-			// see issue #70 for details
+			// Append the flag so that support-colors won't return false
+			// See issue #70 for details
 			flags.push('--color');
 		}
 
@@ -36,9 +37,10 @@ module.exports = function (grunt) {
 		async.eachLimit(tasks, opts.limit, function (task, next) {
 			var cp = grunt.util.spawn({
 				grunt: true,
-				args: arrify(task).concat(flags),
+				args: arrify(task).map(taskName).concat(flags),
 				opts: {
-					stdio: ['ignore', 'pipe', 'pipe']
+					stdio: ['ignore', 'pipe', 'pipe'],
+					env: extend({}, process.env, task.env)
 				}
 			}, function (err, result) {
 				if (!opts.logConcurrentOutput) {
@@ -64,13 +66,26 @@ module.exports = function (grunt) {
 	});
 };
 
+function normalizeTask(task) {
+	if (typeof task === 'string') {
+		return {name: task};
+	} else if (Array.isArray(task)) {
+		return task.map(normalizeTask);
+	}
+	return task;
+}
+
+function taskName(task) {
+	return task.name;
+}
+
 function cleanup() {
 	cpCache.forEach(function (el) {
 		el.kill('SIGKILL');
 	});
 }
 
-// make sure all child processes are killed when grunt exits
+// Make sure all child processes are killed when grunt exits
 process.on('exit', cleanup);
 process.on('SIGINT', function () {
 	cleanup();
