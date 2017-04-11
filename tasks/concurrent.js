@@ -4,6 +4,7 @@ var padStream = require('pad-stream');
 var async = require('async');
 var arrify = require('arrify');
 var indentString = require('indent-string');
+var extend = require('extend');
 
 var cpCache = [];
 
@@ -39,7 +40,7 @@ module.exports = function (grunt) {
 				args: arrify(task).map(taskName).concat(flags),
 				opts: {
 					stdio: ['ignore', 'pipe', 'pipe'],
-					env: Object.assign({}, process.env, task.env)
+					env: extend({}, process.env, task.env)
 				}
 			}, function (err, result) {
 				if (!opts.logConcurrentOutput) {

@@ -73,7 +73,7 @@ describe('concurrent', function () {
 	});
 
 	describe('`env` option', function () {
-		it('outputs the added environment options', done => {
+		it('outputs the added environment options', function (done) {
 			exec('grunt concurrent:testenv', function () {
 				var env1 = JSON.parse(fs.readFileSync(path.join(__dirname, 'tmp/env1'), 'utf8'));
 				var env2 = JSON.parse(fs.readFileSync(path.join(__dirname, 'tmp/env2'), 'utf8'));

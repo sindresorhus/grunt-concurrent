@@ -33,6 +33,7 @@
   "dependencies": {
     "arrify": "^1.0.1",
     "async": "^1.2.1",
+    "extend": "^3.0.0",
     "indent-string": "^2.0.0",
     "pad-stream": "^1.0.0"
   },
