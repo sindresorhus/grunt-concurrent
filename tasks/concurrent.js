@@ -4,8 +4,11 @@ var padStream = require('pad-stream');
 var async = require('async');
 var arrify = require('arrify');
 var indentString = require('indent-string');
+var colors = require('colors');
 
 var cpCache = [];
+
+var colorsAvailable = ["blue","magenta","yellow","green","red","cyan","white","gray"];
 
 module.exports = function (grunt) {
 	grunt.registerMultiTask('concurrent', 'Run grunt tasks concurrently', function () {
@@ -14,6 +17,7 @@ module.exports = function (grunt) {
 			limit: Math.max((os.cpus().length || 1) * 2, 2)
 		});
 		var tasks = this.data.tasks || this.data;
+		var maxTaskLength = Math.max.apply(null,(tasks.map(function(task){ return task.length})));
 		var flags = grunt.option.flags();
 
 		if (flags.indexOf('--no-color') === -1 &&
@@ -49,8 +53,21 @@ module.exports = function (grunt) {
 			});
 
 			if (opts.logConcurrentOutput) {
-				cp.stdout.pipe(padStream(' ', 4)).pipe(process.stdout);
-				cp.stderr.pipe(padStream(' ', 4)).pipe(process.stderr);
+                var taskLabel,numSpaces;
+			    if(opts.logTaskName)
+                {
+                    var colorFn = colorsAvailable.length > 0 ? colors[colorsAvailable.shift()] : function(s) { return s };//use an available color or none if more tasks then colors available
+                    var maxLength = typeof opts.logTaskName === 'number' ?  opts.logTaskName : Math.min(maxTaskLength,12);//task labels in output up to 12 characters
+                    taskLabel = '['+colorFn(task.substr(0,maxLength))+']';
+                    numSpaces = (task.length > maxLength ? 0 : maxLength-task.length) + 3;//let output from all tasks be aligned
+                }
+                else
+                {
+                    taskLabel = '';
+                    numSpaces = 4;
+                }
+				cp.stdout.pipe(padStream(' ', numSpaces)).pipe(padStream(taskLabel, 1)).pipe(process.stdout);
+				cp.stderr.pipe(padStream(' ', numSpaces)).pipe(padStream(taskLabel, 1)).pipe(process.stderr);
 			}
 
 			cpCache.push(cp);
