@@ -8,8 +8,6 @@ var chalk = require('chalk');
 
 var cpCache = [];
 
-var colors = ["blue","magenta","yellow","green","red","cyan","white","gray","redBright","greenBright","yellowBright","blueBright","magentaBright","cyanBright"];
-
 module.exports = function (grunt) {
 	grunt.registerMultiTask('concurrent', 'Run grunt tasks concurrently', function () {
 		var cb = this.async();
@@ -18,6 +16,7 @@ module.exports = function (grunt) {
 		});
 		var tasks = this.data.tasks || this.data;
 		var maxTaskLength = Math.max.apply(null,(tasks.map(function(task){ return task.length})));
+		var colors = ["blue","magenta","yellow","green","red","cyan","white","gray"];
 		var flags = grunt.option.flags();
 
 		if (flags.indexOf('--no-color') === -1 &&
@@ -56,7 +55,7 @@ module.exports = function (grunt) {
 				var padString;
 				if (opts.logTaskName) {
 					var colorFn = colors.length > 0 ? chalk[colors.shift()] : function(s) { return s };//use an available color or none if more tasks then colors available
-					var maxLength = typeof opts.logTaskName === 'number' ?  opts.logTaskName : Math.min(maxTaskLength,12);//task labels in output up to 12 characters
+					var maxLength = typeof opts.logTaskName === 'number' ?  opts.logTaskName : maxTaskLength;//use the longest task name as maximum, or the maximum provided by logTaskName
 					var numSpaces = (task.length > maxLength ? 0 : maxLength-task.length) + 3;//let output from all tasks be aligned
 					padString = '['+colorFn(task.slice(0,maxLength))+']'+(' '.repeat(numSpaces));
 				} else {
