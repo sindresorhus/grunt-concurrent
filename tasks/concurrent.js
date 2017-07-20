@@ -4,11 +4,11 @@ var padStream = require('pad-stream');
 var async = require('async');
 var arrify = require('arrify');
 var indentString = require('indent-string');
-var colors = require('colors');
+var chalk = require('chalk');
 
 var cpCache = [];
 
-var colorsAvailable = ["blue","magenta","yellow","green","red","cyan","white","gray"];
+var colors = ["blue","magenta","yellow","green","red","cyan","white","gray","redBright","greenBright","yellowBright","blueBright","magentaBright","cyanBright"];
 
 module.exports = function (grunt) {
 	grunt.registerMultiTask('concurrent', 'Run grunt tasks concurrently', function () {
@@ -53,21 +53,18 @@ module.exports = function (grunt) {
 			});
 
 			if (opts.logConcurrentOutput) {
-				var taskLabel,numSpaces;
-				if(opts.logTaskName)
-				{
-					var colorFn = colorsAvailable.length > 0 ? colors[colorsAvailable.shift()] : function(s) { return s };//use an available color or none if more tasks then colors available
+				var padString;
+				if (opts.logTaskName) {
+					var colorFn = colors.length > 0 ? chalk[colors.shift()] : function(s) { return s };//use an available color or none if more tasks then colors available
 					var maxLength = typeof opts.logTaskName === 'number' ?  opts.logTaskName : Math.min(maxTaskLength,12);//task labels in output up to 12 characters
-					taskLabel = '['+colorFn(task.substr(0,maxLength))+']';
-					numSpaces = (task.length > maxLength ? 0 : maxLength-task.length) + 3;//let output from all tasks be aligned
+					var numSpaces = (task.length > maxLength ? 0 : maxLength-task.length) + 3;//let output from all tasks be aligned
+                    padString = '['+colorFn(task.slice(0,maxLength))+']'+(' '.repeat(numSpaces));
+				} else {
+					padString = '    ';
 				}
-				else
-				{
-					taskLabel = '';
-					numSpaces = 4;
-				}
-				cp.stdout.pipe(padStream(' ', numSpaces)).pipe(padStream(taskLabel, 1)).pipe(process.stdout);
-				cp.stderr.pipe(padStream(' ', numSpaces)).pipe(padStream(taskLabel, 1)).pipe(process.stderr);
+
+				cp.stdout.pipe(padStream(padString, 1)).pipe(process.stdout);
+				cp.stderr.pipe(padStream(padString, 1)).pipe(process.stderr);
 			}
 
 			cpCache.push(cp);

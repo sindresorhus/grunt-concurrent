@@ -83,6 +83,12 @@ grunt.registerTask('default', ['concurrent:target']);
 
 *The output will be messy when combining certain tasks. This option is best used with tasks that don't exit like `watch` and `nodemon` to monitor the output of long-running concurrent tasks.*
 
+### logTaskName
+
+Type: `boolean|number`<br>
+Default: `false`
+
+When logging the output of concurrent tasks with `logConcurrentOutput` you can set `logTaskName` to prepend the name of the task to the beginning of every output line. Specify a number to limit the maximum number of characters used for the task name.
 
 ## License
 
