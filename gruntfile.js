@@ -7,6 +7,14 @@ module.exports = function (grunt) {
 			test: ['test1', 'test2', 'test3'],
 			testSequence: ['test4', ['test5', 'test6']],
 			testargs: ['testargs1', 'testargs2'],
+			testfn: function(target){
+				return ['testfn1:'+target];
+			},
+			testfnTasks: {
+				tasks: function(target){
+					return ['testfn2:'+target];
+				}
+			},
 			log: {
 				options: {
 					logConcurrentOutput: true
@@ -90,6 +98,14 @@ module.exports = function (grunt) {
 	grunt.registerTask('testargs2', function () {
 		var args = grunt.option.flags().join();
 		grunt.file.write('test/tmp/args2', args);
+	});
+
+	grunt.registerTask('testfn1', function (target) {
+		grunt.file.write('test/tmp/fn1', target);
+	});
+
+	grunt.registerTask('testfn2', function (target) {
+		grunt.file.write('test/tmp/fn2', target);
 	});
 
 	grunt.registerTask('colorcheck', function () {

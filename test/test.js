@@ -31,6 +31,16 @@ describe('concurrent', function () {
 			done();
 		});
 	});
+	
+	it('passes arguments to tasks', function(done){
+		exec('grunt concurrent:testfn:dev concurrent:testfnTasks:prod', function () {
+			var fn1 = fs.readFileSync(path.join(__dirname, 'tmp/fn1'), 'utf8');
+			var fn2 = fs.readFileSync(path.join(__dirname, 'tmp/fn2'), 'utf8');
+			assert.ok(fn1.indexOf('dev') !== -1);
+			assert.ok(fn2.indexOf('prod') !== -1);
+			done();
+		});
+	});
 
 	describe('`logConcurrentOutput` option', function () {
 		var logOutput = '';
