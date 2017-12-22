@@ -48,6 +48,36 @@ grunt.initConfig({
 ```
 Now `jshint` will always be done before `coffee` and `sass` runs independent of both of them.
 
+## Pass task arguments
+
+```js
+grunt.initConfig({
+	concurrent: {
+		target: function(env){
+			return [
+				'build:'+env
+			];
+		},
+		target2: {
+			tasks: function(env){
+				return [
+					'build'+env
+				];
+			}
+		}
+	}
+});
+```
+You can pass
+
+```
+$ grunt concurrent:target:dev
+# Run will run `build:dev` as part of a concurrent task
+
+$ grunt concurrent:target2:prod
+# Run will run `build:prod` as part of a concurrent task
+```
+
 
 ## Options
 

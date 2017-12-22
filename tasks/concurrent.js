@@ -13,9 +13,13 @@ module.exports = function (grunt) {
 		var opts = this.options({
 			limit: Math.max((os.cpus().length || 1) * 2, 2)
 		});
+		
 		var tasks = this.data.tasks || this.data;
+		if (tasks instanceof Function){
+			tasks = tasks.apply(null, arguments);
+		}
+		
 		var flags = grunt.option.flags();
-
 		if (flags.indexOf('--no-color') === -1 &&
 			flags.indexOf('--no-colors') === -1 &&
 			flags.indexOf('--color=false') === -1) {
