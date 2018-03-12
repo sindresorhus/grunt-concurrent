@@ -83,6 +83,32 @@ grunt.registerTask('default', ['concurrent:target']);
 
 *The output will be messy when combining certain tasks. This option is best used with tasks that don't exit like `watch` and `nodemon` to monitor the output of long-running concurrent tasks.*
 
+### spawn
+
+Type: `object`<br>
+Default: Set stdio to ignore stdin and pipe stdout and stderr
+
+This option allows you to set the `opts` parameter passed to
+[`grunt.util.spawn`](https://gruntjs.com/api/grunt.util#grunt.util.spawn). By
+default, the configuration is equivalent to:
+
+```js
+grunt.initConfig({
+	concurrent: {
+		target: {
+			options: {
+				spawn: {
+					stdio: ['ignore', 'pipe', 'pipe']
+				}
+			}
+		}
+	}
+});
+```
+
+This is nice if you'd like to have a little more control over how the target
+actually spawns. Note that the options are originally defined for node's
+[`child_process.spawn`](https://nodejs.org/api/child_process.html#child_process_child_process_spawn_command_args_options).
 
 ## License
 

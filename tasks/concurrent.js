@@ -11,7 +11,8 @@ module.exports = function (grunt) {
 	grunt.registerMultiTask('concurrent', 'Run grunt tasks concurrently', function () {
 		var cb = this.async();
 		var opts = this.options({
-			limit: Math.max((os.cpus().length || 1) * 2, 2)
+			limit: Math.max((os.cpus().length || 1) * 2, 2),
+			spawn: {stdio: ['ignore', 'pipe', 'pipe']},
 		});
 		var tasks = this.data.tasks || this.data;
 		var flags = grunt.option.flags();
@@ -37,9 +38,7 @@ module.exports = function (grunt) {
 			var cp = grunt.util.spawn({
 				grunt: true,
 				args: arrify(task).concat(flags),
-				opts: {
-					stdio: ['ignore', 'pipe', 'pipe']
-				}
+				opts: opts.spawn
 			}, function (err, result) {
 				if (!opts.logConcurrentOutput) {
 					grunt.log.writeln('\n' + indentString(result.stdout + result.stderr, ' ', 4));
