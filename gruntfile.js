@@ -13,7 +13,20 @@ module.exports = function (grunt) {
 				},
 				tasks: ['nodemon', 'watch']
 			},
-			colors: ['colorcheck']
+			colors: ['colorcheck'],
+			omitLogIndentationTrue: {
+				options: {
+					omitLogIndentation: true
+				},
+				tasks: ['testOmitLogIndentation']
+			},
+			omitLogIndentationFalse: {
+				options: {
+					omitLogIndentation: false
+				},
+				tasks: ['testOmitLogIndentation']
+			},
+			omitLogIndentationDefault: ['testOmitLogIndentation']
 		},
 		simplemocha: {
 			test: {
@@ -96,6 +109,10 @@ module.exports = function (grunt) {
 		// writes 'true' or 'false' to the file
 		var supports = String(Boolean(supportsColor));
 		grunt.file.write('test/tmp/colors', supports);
+	});
+
+	grunt.registerTask('testOmitLogIndentation', function () {
+		console.log('omitLogIndentation test output');
 	});
 
 	grunt.registerTask('default', [

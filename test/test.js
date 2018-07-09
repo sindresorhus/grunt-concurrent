@@ -71,4 +71,30 @@ describe('concurrent', function () {
 			});
 		});
 	});
+
+	describe('`omitLogIndentation` option', function () {
+		var testOutput = 'omitLogIndentation test output';
+		var indentedTestOutput = '    ' + testOutput;
+
+		it('omits indentation when true', function (done) {
+			exec('grunt concurrent:omitLogIndentationTrue', function (error, stdout) {
+				assert.notEqual(stdout.split('\n').indexOf(testOutput), -1);
+				done();
+			});
+		});
+
+		it('indents output when false', function (done) {
+			exec('grunt concurrent:omitLogIndentationFalse', function (error, stdout) {
+				assert.notEqual(stdout.split('\n').indexOf(indentedTestOutput), -1);
+				done();
+			});
+		});
+
+		it('indents output by default', function (done) {
+			exec('grunt concurrent:omitLogIndentationDefault', function (error, stdout) {
+				assert.notEqual(stdout.split('\n').indexOf(indentedTestOutput), -1);
+				done();
+			});
+		});
+	});
 });

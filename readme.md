@@ -83,6 +83,13 @@ grunt.registerTask('default', ['concurrent:target']);
 
 *The output will be messy when combining certain tasks. This option is best used with tasks that don't exit like `watch` and `nodemon` to monitor the output of long-running concurrent tasks.*
 
+### omitLogIndentation
+
+Type: `boolean`<br>
+Default: `false`
+
+You can optionally omit the indentation in the log output of your concurrent tasks by specifying the `omitLogIndentation` option. This can be useful for running tasks in parallel for a stdout parser which expect no indentation, e.g. TeamCity tests.
+
 
 ## License
 

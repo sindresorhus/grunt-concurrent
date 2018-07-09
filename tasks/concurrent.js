@@ -42,15 +42,25 @@ module.exports = function (grunt) {
 				}
 			}, function (err, result) {
 				if (!opts.logConcurrentOutput) {
-					grunt.log.writeln('\n' + indentString(result.stdout + result.stderr, ' ', 4));
+					var output = result.stdout + result.stderr;
+					if (!opts.omitLogIndentation) {
+						output = indentString(output, ' ', 4);
+					}
+					grunt.log.writeln('\n' + output);
 				}
 
 				next(err);
 			});
 
 			if (opts.logConcurrentOutput) {
-				cp.stdout.pipe(padStream(' ', 4)).pipe(process.stdout);
-				cp.stderr.pipe(padStream(' ', 4)).pipe(process.stderr);
+				var childStdout = cp.stdout;
+				var childStderr = cp.stderr;
+				if (!opts.omitLogIndentation) {
+					childStdout = childStdout.pipe(padStream(' ', 4));
+					childStderr = childStderr.pipe(padStream(' ', 4));
+				}
+				childStdout.pipe(process.stdout);
+				childStderr.pipe(process.stderr);
 			}
 
 			cpCache.push(cp);

@@ -47,7 +47,7 @@
     "nodemon": "^1.2.1",
     "path-exists": "^2.0.0",
     "supports-color": "^3.1.2",
-    "xo": "*"
+    "xo": "^0.17.1"
   },
   "peerDependencies": {
     "grunt": ">=0.4.0"
