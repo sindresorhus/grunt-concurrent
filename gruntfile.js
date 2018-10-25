@@ -13,6 +13,13 @@ module.exports = function (grunt) {
 				},
 				tasks: ['nodemon', 'watch']
 			},
+			logTaskName: {
+			  options: {
+			    logConcurrentOutput: true,
+			    logTaskName: true
+			  },
+			  tasks: ['test1', 'test2', 'test3']
+			},
 			colors: ['colorcheck']
 		},
 		simplemocha: {
@@ -102,6 +109,7 @@ module.exports = function (grunt) {
 		'clean',
 		'concurrent:test',
 		'concurrent:testSequence',
+		'concurrent:logTaskName',
 		'simplemocha',
 		'clean'
 	]);
