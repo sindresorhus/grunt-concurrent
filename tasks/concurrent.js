@@ -56,8 +56,8 @@ module.exports = function (grunt) {
 				if (opts.logTaskName) {
 					var colorFn = colors.length > 0 ? chalk[colors.shift()] : function(s) { return s };//use an available color or none if more tasks then colors available
 					var maxLength = typeof opts.logTaskName === 'number' ?  opts.logTaskName : maxTaskLength;//use the longest task name as maximum, or the maximum provided by logTaskName
-					var numSpaces = (task.length > maxLength ? 0 : maxLength-task.length) + 3;//let output from all tasks be aligned
-					padString = '['+colorFn(task.slice(0,maxLength))+']'+(' '.repeat(numSpaces));
+					var paddingSpaces = (task.length > maxLength ? 0 : maxLength-task.length) + '[] '.length; //let output from all tasks be aligned
+					padString = '['+colorFn(task.slice(0,maxLength))+']'+(' '.repeat(paddingSpaces));
 				} else {
 					padString = '    ';
 				}
