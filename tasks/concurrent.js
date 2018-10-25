@@ -16,7 +16,7 @@ module.exports = function (grunt) {
 		});
 		var tasks = this.data.tasks || this.data;
 		var maxTaskLength = Math.max.apply(null,(tasks.map(function(task){ return task.length})));
-		var colors = ["blue","magenta","yellow","green","red","cyan","white","gray"];
+		var colors = ["blue","magenta","yellow","green","red","cyan","gray"];
 		var flags = grunt.option.flags();
 
 		if (flags.indexOf('--no-color') === -1 &&
