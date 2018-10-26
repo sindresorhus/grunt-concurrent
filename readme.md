@@ -60,7 +60,7 @@ Limit how many tasks that are run concurrently.
 
 ### logConcurrentOutput
 
-Type: `boolean`<br>
+Type: `boolean|Object`<br>
 Default: `false`
 
 You can optionally log the output of your concurrent tasks by specifying the `logConcurrentOutput` option. Here is an example config which runs [grunt-nodemon](https://github.com/ChrisWren/grunt-nodemon) to launch and monitor a node server and [grunt-contrib-watch](https://github.com/gruntjs/grunt-contrib-watch) to watch for asset changes all in one terminal tab:
@@ -81,14 +81,46 @@ grunt.loadNpmTasks('grunt-concurrent');
 grunt.registerTask('default', ['concurrent:target']);
 ```
 
+To gather better information about task producing log output, you can use the `logConcurrentOutput.showTask` option (see below).
+
 *The output will be messy when combining certain tasks. This option is best used with tasks that don't exit like `watch` and `nodemon` to monitor the output of long-running concurrent tasks.*
 
-### logTaskName
+### logConcurrentOutput.showTask
 
 Type: `boolean|number`<br>
 Default: `false`
 
-When logging the output of concurrent tasks with `logConcurrentOutput` you can set `logTaskName` to prepend the name of the task to the beginning of every output line. Specify a number to limit the maximum number of characters used for the task name.
+You can optionally prepend current task name producing log output by specifying the `logConcurrentOutput.showTask` option.  
+
+```js
+grunt.initConfig({
+	concurrent: {
+		target: {
+			tasks: ['test1', 'test2', 'test3'],
+			options: {
+				logConcurrentOutput: { showTask: true }
+			}
+		}
+	}
+});
+```
+
+You can expand this option to limit task name length displayed :
+
+```js
+grunt.initConfig({
+	concurrent: {
+		target: {
+			tasks: ['test1', 'test2', 'testargs1'],
+			options: {
+				logConcurrentOutput: {
+				  showTask: 7
+				}
+			}
+		}
+	}
+});
+```
 
 ## License
 
