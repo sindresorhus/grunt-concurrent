@@ -67,6 +67,10 @@ module.exports = function (grunt) {
 					} else {
 						color = null;
 					}
+					if(color && !chalk[color]) {
+						grunt.log.error("No chalk color found corresponding to ["+color+"] => falling back to uncolored task ["+task+"]");
+						color = null;
+					}
 					var colorizeFn = color ? chalk[color] : function(s) { return s };//use an available color or none if more tasks then colors available
 					var maxLength = opts.logConcurrentOutput.showTask.maxLength || maxTaskLength;//use the longest task name as maximum, or the maximum provided by logConcurrentOutput.showTask.maxLength
 					var paddingSpaces = (task.length > maxLength ? 0 : maxLength-task.length) + '[] '.length; //let output from all tasks be aligned

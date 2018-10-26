@@ -26,7 +26,7 @@ module.exports = function (grunt) {
 			    logConcurrentOutput: {
 			      showTask: {
 			        maxLength: 7,
-			        colors: { 'test1': 'green', 'test2': 'blue', 'testargs1': 'yellow' }
+			        colors: { 'test1': 'green', 'test2': 'unknown-color', 'testargs1': 'yellow' }
 			      }
 			    }
 			  },
