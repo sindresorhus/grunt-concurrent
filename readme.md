@@ -87,7 +87,7 @@ To gather better information about task producing log output, you can use the `l
 
 ### logConcurrentOutput.showTask
 
-Type: `boolean|number`<br>
+Type: `boolean|{color:Object|Array|Function, maxLength:number}`<br>
 Default: `false`
 
 You can optionally prepend current task name producing log output by specifying the `logConcurrentOutput.showTask` option.  
@@ -105,7 +105,7 @@ grunt.initConfig({
 });
 ```
 
-You can expand this option to limit task name length displayed :
+You can expand this option to define custom colors if default ones don't fit your needs, or to limit task name length displayed :
 
 ```js
 grunt.initConfig({
@@ -114,7 +114,10 @@ grunt.initConfig({
 			tasks: ['test1', 'test2', 'testargs1'],
 			options: {
 				logConcurrentOutput: {
-				  showTask: 7
+					showTask: {
+						maxLength: 7,
+						colors: { 'test1': 'green', 'test2': 'blue', 'testargs1': 'yellow' }
+					}
 				}
 			}
 		}

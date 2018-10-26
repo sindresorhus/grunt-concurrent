@@ -17,6 +17,9 @@ module.exports = function (grunt) {
 		var tasks = this.data.tasks || this.data;
 		var maxTaskLength = Math.max.apply(null,(tasks.map(function(task){ return task.length})));
 		var taskColors = ["blue","magenta","yellow","green","red","cyan","gray"];
+		if(opts.logConcurrentOutput && opts.logConcurrentOutput.showTask && opts.logConcurrentOutput.showTask.colors) {
+			taskColors = opts.logConcurrentOutput.showTask.colors;
+		}
 		var flags = grunt.option.flags();
 
 		if (flags.indexOf('--no-color') === -1 &&
@@ -57,11 +60,15 @@ module.exports = function (grunt) {
 					var color;
 					if(taskColors.length) { // task colors is a non-empty array => retrieving next available color
 						color = taskColors.shift();
+					} else if(taskColors[task]) { // task colors is a map[taskName]:color containing current task
+						color = taskColors[task];
+					} else if(typeof taskColors === 'function') { // task colors is a function, resolving color by task name
+						color = taskColors(task);
 					} else {
 						color = null;
 					}
 					var colorizeFn = color ? chalk[color] : function(s) { return s };//use an available color or none if more tasks then colors available
-					var maxLength = typeof opts.logConcurrentOutput.showTask.maxLength === 'number' ? opts.logConcurrentOutput.showTask.maxLength : maxTaskLength;//use the longest task name as maximum, or the maximum provided by logConcurrentOutput.showTask
+					var maxLength = opts.logConcurrentOutput.showTask.maxLength || maxTaskLength;//use the longest task name as maximum, or the maximum provided by logConcurrentOutput.showTask.maxLength
 					var paddingSpaces = (task.length > maxLength ? 0 : maxLength-task.length) + '[] '.length; //let output from all tasks be aligned
 					padString = colorizeFn('['+task.slice(0,maxLength)+']')+(' '.repeat(paddingSpaces));
 				} else {
