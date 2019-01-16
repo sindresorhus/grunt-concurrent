@@ -49,8 +49,10 @@ module.exports = function (grunt) {
 			});
 
 			if (opts.logConcurrentOutput) {
-				cp.stdout.pipe(padStream(' ', 4)).pipe(process.stdout);
-				cp.stderr.pipe(padStream(' ', 4)).pipe(process.stderr);
+				var padding = opts.logTaskName ? `${task} ` : '    ';
+
+				cp.stdout.pipe(padStream(padding, 1)).pipe(process.stdout);
+				cp.stderr.pipe(padStream(padding, 1)).pipe(process.stderr);
 			}
 
 			cpCache.push(cp);
