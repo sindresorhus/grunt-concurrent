@@ -1,19 +1,36 @@
 'use strict';
-var supportsColor = require('supports-color');
+const supportsColor = require('supports-color');
 
-module.exports = function (grunt) {
+module.exports = grunt => {
 	grunt.initConfig({
 		concurrent: {
-			test: ['test1', 'test2', 'test3'],
-			testSequence: ['test4', ['test5', 'test6']],
-			testargs: ['testargs1', 'testargs2'],
+			test: [
+				'test1',
+				'test2',
+				'test3'
+			],
+			testSequence: [
+				'test4', [
+					'test5',
+					'test6'
+				]
+			],
+			testargs: [
+				'testargs1',
+				'testargs2'
+			],
 			log: {
 				options: {
 					logConcurrentOutput: true
 				},
-				tasks: ['nodemon', 'watch']
+				tasks: [
+					'nodemon',
+					'watch'
+				]
 			},
-			colors: ['colorcheck']
+			colors: [
+				'colorcheck'
+			]
 		},
 		simplemocha: {
 			test: {
@@ -24,12 +41,18 @@ module.exports = function (grunt) {
 			}
 		},
 		clean: {
-			test: ['test/tmp']
+			test: [
+				'test/tmp'
+			]
 		},
 		watch: {
 			scripts: {
-				files: ['tasks/*.js'],
-				tasks: ['default']
+				files: [
+					'tasks/*.js'
+				],
+				tasks: [
+					'default'
+				]
 			}
 		},
 		nodemon: {
@@ -47,54 +70,54 @@ module.exports = function (grunt) {
 	grunt.loadNpmTasks('grunt-simple-mocha');
 	grunt.loadNpmTasks('grunt-nodemon');
 
-	grunt.registerTask('test1', function () {
+	grunt.registerTask('test1', () => {
 		console.log('test1');
 		grunt.file.write('test/tmp/1');
 	});
 
 	grunt.registerTask('test2', function () {
-		var cb = this.async();
-		setTimeout(function () {
+		const cb = this.async();
+		setTimeout(() => {
 			console.log('test2');
 			grunt.file.write('test/tmp/2');
 			cb();
 		}, 1000);
 	});
 
-	grunt.registerTask('test3', function () {
+	grunt.registerTask('test3', () => {
 		console.log('test3');
 		grunt.file.write('test/tmp/3');
 	});
 
-	grunt.registerTask('test4', function () {
+	grunt.registerTask('test4', () => {
 		console.log('test4');
 		grunt.file.write('test/tmp/4');
 	});
 
-	grunt.registerTask('test5', function () {
+	grunt.registerTask('test5', () => {
 		console.log('test5');
 		grunt.file.write('test/tmp/5');
 		sleep(1000);
 	});
 
-	grunt.registerTask('test6', function () {
+	grunt.registerTask('test6', () => {
 		console.log('test6');
 		grunt.file.write('test/tmp/6');
 	});
 
-	grunt.registerTask('testargs1', function () {
-		var args = grunt.option.flags().join();
+	grunt.registerTask('testargs1', () => {
+		const args = grunt.option.flags().join();
 		grunt.file.write('test/tmp/args1', args);
 	});
 
-	grunt.registerTask('testargs2', function () {
-		var args = grunt.option.flags().join();
+	grunt.registerTask('testargs2', () => {
+		const args = grunt.option.flags().join();
 		grunt.file.write('test/tmp/args2', args);
 	});
 
-	grunt.registerTask('colorcheck', function () {
-		// writes 'true' or 'false' to the file
-		var supports = String(Boolean(supportsColor));
+	grunt.registerTask('colorcheck', () => {
+		// Writes 'true' or 'false' to the file
+		const supports = String(Boolean(supportsColor.stdout));
 		grunt.file.write('test/tmp/colors', supports);
 	});
 
@@ -108,8 +131,8 @@ module.exports = function (grunt) {
 };
 
 function sleep(milliseconds) {
-	var start = new Date().getTime();
-	for (var i = 0; i < 1e7; i++) {
+	const start = new Date().getTime();
+	for (let i = 0; i < 1e7; i++) {
 		if ((new Date().getTime() - start) > milliseconds) {
 			break;
 		}

@@ -1,7 +1,7 @@
 'use strict';
-var net = require('net');
+const net = require('net');
 
-var server = net.createServer(function (socket) {
+const server = net.createServer(socket => {
 	socket.write('Hello world').pipe(socket);
 });
 

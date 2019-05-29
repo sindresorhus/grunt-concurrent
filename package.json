@@ -1,55 +1,55 @@
 {
-  "name": "grunt-concurrent",
-  "version": "2.3.1",
-  "description": "Run grunt tasks concurrently",
-  "keywords": [
-    "gruntplugin",
-    "concurrent",
-    "parallel",
-    "simultaneous",
-    "optimize",
-    "speed",
-    "perf",
-    "performance",
-    "fast",
-    "faster"
-  ],
-  "author": {
-    "name": "Sindre Sorhus",
-    "email": "sindresorhus@gmail.com",
-    "url": "sindresorhus.com"
-  },
-  "repository": "sindresorhus/grunt-concurrent",
-  "scripts": {
-    "test": "xo && grunt"
-  },
-  "files": [
-    "tasks"
-  ],
-  "engines": {
-    "node": ">=0.10.0"
-  },
-  "license": "MIT",
-  "dependencies": {
-    "arrify": "^1.0.1",
-    "async": "^1.2.1",
-    "indent-string": "^2.0.0",
-    "pad-stream": "^1.0.0"
-  },
-  "devDependencies": {
-    "cross-spawn": "^2.0.0",
-    "grunt": "^0.4.5",
-    "grunt-cli": "^0.1.13",
-    "grunt-contrib-clean": "^0.7.0",
-    "grunt-contrib-watch": "^0.6.1",
-    "grunt-nodemon": "^0.4.0",
-    "grunt-simple-mocha": "^0.4.0",
-    "nodemon": "^1.2.1",
-    "path-exists": "^2.0.0",
-    "supports-color": "^3.1.2",
-    "xo": "*"
-  },
-  "peerDependencies": {
-    "grunt": ">=0.4.0"
-  }
+	"name": "grunt-concurrent",
+	"version": "2.3.1",
+	"description": "Run grunt tasks concurrently",
+	"license": "MIT",
+	"repository": "sindresorhus/grunt-concurrent",
+	"author": {
+		"name": "Sindre Sorhus",
+		"email": "sindresorhus@gmail.com",
+		"url": "sindresorhus.com"
+	},
+	"engines": {
+		"node": ">=8"
+	},
+	"scripts": {
+		"test": "xo && grunt"
+	},
+	"files": [
+		"tasks"
+	],
+	"keywords": [
+		"gruntplugin",
+		"concurrent",
+		"parallel",
+		"simultaneous",
+		"optimize",
+		"speed",
+		"perf",
+		"performance",
+		"fast",
+		"faster"
+	],
+	"dependencies": {
+		"arrify": "^2.0.1",
+		"async": "^3.0.1",
+		"indent-string": "^4.0.0",
+		"pad-stream": "^2.0.0"
+	},
+	"devDependencies": {
+		"cross-spawn": "^6.0.5",
+		"grunt": "^1.0.4",
+		"grunt-cli": "^1.3.2",
+		"grunt-contrib-clean": "^2.0.0",
+		"grunt-contrib-watch": "^1.1.0",
+		"grunt-nodemon": "^0.4.0",
+		"grunt-simple-mocha": "^0.4.0",
+		"nodemon": "^1.2.1",
+		"path-exists": "^4.0.0",
+		"supports-color": "^6.1.0",
+		"xo": "^0.24.0"
+	},
+	"peerDependencies": {
+		"grunt": ">=1"
+	}
 }
