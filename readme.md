@@ -82,4 +82,4 @@ grunt.registerTask('default', ['concurrent:target']);
 Type: `boolean`<br>
 Default: `true`
 
-You can optionally skip indenting the log output of your concurrent tasks by specifying the `indent` option as `false`. This can be useful for running tasks in parallel for a stdout parser which expects no indentation, e.g. TeamCity tests.
+You can optionally skip indenting the log output of your concurrent tasks by specifying `false`. This can be useful for running tasks in parallel for a stdout parser which expects no indentation, for example, TeamCity tests.
