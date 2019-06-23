@@ -32,7 +32,7 @@
 	],
 	"dependencies": {
 		"arrify": "^2.0.1",
-		"async": "^3.0.1",
+		"async": "^3.1.0",
 		"indent-string": "^4.0.0",
 		"pad-stream": "^2.0.0"
 	},
@@ -46,7 +46,7 @@
 		"grunt-simple-mocha": "^0.4.0",
 		"nodemon": "^1.2.1",
 		"path-exists": "^4.0.0",
-		"supports-color": "^6.1.0",
+		"supports-color": "^7.0.0",
 		"xo": "^0.24.0"
 	},
 	"peerDependencies": {
