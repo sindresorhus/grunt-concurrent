@@ -53,7 +53,7 @@ module.exports = grunt => {
 						output = indentString(output, 4);
 					}
 
-					grunt.log.writeln('\n' + output);
+					grunt.log.writeln(`\n${output}`);
 				}
 
 				next(error);
