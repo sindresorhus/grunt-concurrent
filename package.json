@@ -1,6 +1,6 @@
 {
 	"name": "grunt-concurrent",
-	"version": "2.3.1",
+	"version": "3.0.0",
 	"description": "Run grunt tasks concurrently",
 	"license": "MIT",
 	"repository": "sindresorhus/grunt-concurrent",
