@@ -30,6 +30,34 @@ module.exports = grunt => {
 			},
 			colors: [
 				'colorcheck'
+			],
+			indentTrue: {
+				options: {
+					indent: true
+				},
+				tasks: [
+					'testIndent'
+				]
+			},
+			indentFalse: {
+				options: {
+					indent: false
+				},
+				tasks: [
+					'testIndent'
+				]
+			},
+			indentFalseConcurrentOutput: {
+				options: {
+					logConcurrentOutput: true,
+					indent: false
+				},
+				tasks: [
+					'testIndent'
+				]
+			},
+			indentDefault: [
+				'testIndent'
 			]
 		},
 		simplemocha: {
@@ -119,6 +147,10 @@ module.exports = grunt => {
 		// Writes 'true' or 'false' to the file
 		const supports = String(Boolean(supportsColor.stdout));
 		grunt.file.write('test/tmp/colors', supports);
+	});
+
+	grunt.registerTask('testIndent', () => {
+		console.log('indent test output');
 	});
 
 	grunt.registerTask('default', [

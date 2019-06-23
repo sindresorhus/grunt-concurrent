@@ -71,4 +71,37 @@ describe('concurrent', () => {
 			});
 		});
 	});
+
+	describe('`indent` option', () => {
+		const testOutput = 'indent test output';
+		const indentedTestOutput = '    ' + testOutput;
+
+		it('indents output when true', done => {
+			exec('grunt concurrent:indentTrue', (error, stdout) => {
+				assert.ok(stdout.split('\n').includes(indentedTestOutput));
+				done();
+			});
+		});
+
+		it('does not indent output when false', done => {
+			exec('grunt concurrent:indentFalse', (error, stdout) => {
+				assert.ok(stdout.split('\n').includes(testOutput));
+				done();
+			});
+		});
+
+		it('does not indent output when false and logConcurrentOutput is true', done => {
+			exec('grunt concurrent:indentFalseConcurrentOutput', (error, stdout) => {
+				assert.ok(stdout.split('\n').includes(testOutput));
+				done();
+			});
+		});
+
+		it('indents output by default', done => {
+			exec('grunt concurrent:indentDefault', (error, stdout) => {
+				assert.ok(stdout.split('\n').includes(indentedTestOutput));
+				done();
+			});
+		});
+	});
 });

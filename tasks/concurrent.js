@@ -12,7 +12,8 @@ module.exports = grunt => {
 		const done = this.async();
 
 		const options = this.options({
-			limit: Math.max((os.cpus().length || 1) * 2, 2)
+			limit: Math.max((os.cpus().length || 1) * 2, 2),
+			indent: true
 		});
 
 		const tasks = this.data.tasks || this.data;
@@ -47,15 +48,27 @@ module.exports = grunt => {
 				}
 			}, (error, result) => {
 				if (!options.logConcurrentOutput) {
-					grunt.log.writeln('\n' + indentString(result.stdout + result.stderr, 4));
+					let output = result.stdout + result.stderr;
+					if (options.indent) {
+						output = indentString(output, 4);
+					}
+
+					grunt.log.writeln(`\n${output}`);
 				}
 
 				next(error);
 			});
 
 			if (options.logConcurrentOutput) {
-				subprocess.stdout.pipe(padStream(4)).pipe(process.stdout);
-				subprocess.stderr.pipe(padStream(4)).pipe(process.stderr);
+				let subStdout = subprocess.stdout;
+				let subStderr = subprocess.stderr;
+				if (options.indent) {
+					subStdout = subStdout.pipe(padStream(4));
+					subStderr = subStderr.pipe(padStream(4));
+				}
+
+				subStdout.pipe(process.stdout);
+				subStderr.pipe(process.stderr);
 			}
 
 			subprocesses.push(subprocess);
