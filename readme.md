@@ -1,4 +1,4 @@
-# grunt-concurrent [![Build Status](https://travis-ci.org/sindresorhus/grunt-concurrent.svg?branch=master)](https://travis-ci.org/sindresorhus/grunt-concurrent)
+# grunt-concurrent
 
 > Run grunt tasks concurrently
 
