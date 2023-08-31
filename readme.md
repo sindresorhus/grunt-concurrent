@@ -6,13 +6,11 @@
 
 Running slow tasks like Coffee and Sass concurrently can potentially improve your build time significantly. This task is also useful if you need to run [multiple blocking tasks](#logconcurrentoutput) like `nodemon` and `watch` at once.
 
-
 ## Install
 
+```sh
+npm install --save-dev grunt-concurrent
 ```
-$ npm install --save-dev grunt-concurrent
-```
-
 
 ## Usage
 
@@ -47,14 +45,14 @@ Now `jshint` will always be done before `coffee` and `sass` runs independent of 
 
 ### limit
 
-Type: `number`<br>
+Type: `number`\
 Default: Twice the number of CPU cores with a minimum of 2
 
 Limit how many tasks that are run concurrently.
 
 ### logConcurrentOutput
 
-Type: `boolean`<br>
+Type: `boolean`\
 Default: `false`
 
 You can optionally log the output of your concurrent tasks by specifying the `logConcurrentOutput` option. Here is an example config which runs [grunt-nodemon](https://github.com/ChrisWren/grunt-nodemon) to launch and monitor a node server and [grunt-contrib-watch](https://github.com/gruntjs/grunt-contrib-watch) to watch for asset changes all in one terminal tab:
@@ -79,7 +77,7 @@ grunt.registerTask('default', ['concurrent:target']);
 
 ### indent
 
-Type: `boolean`<br>
+Type: `boolean`\
 Default: `true`
 
 You can optionally skip indenting the log output of your concurrent tasks by specifying `false`. This can be useful for running tasks in parallel for a stdout parser which expects no indentation, for example, TeamCity tests.
